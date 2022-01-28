@@ -1,0 +1,5 @@
+[fetch]
+    prune = true
+[user]
+    email = satory074@gmail.com
+    name = satory074
