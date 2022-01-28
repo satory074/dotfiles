@@ -23,7 +23,7 @@ fi
 
 # Aliases
 ## Extended Command
-alias cda='(){pushd $1 && ls -a1}'
+alias cda='(){cd $1 && ls -a1}'
 alias lsa='ls -la'
 alias mkd='(){mkdir $1 && cd $1}'
 
