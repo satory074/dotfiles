@@ -21,6 +21,11 @@ if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
+# Python
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+
 # Aliases
 ## Extended Command
 alias cda='(){cd $1 && ls -a1}'
@@ -71,3 +76,4 @@ case ${OSTYPE} in
     linux*)
         alias open='xdg-open'
 esac
+
