@@ -10,7 +10,7 @@ zstyle ':vcs_info:*' actionformats '[%b|%a]'
 precmd () { vcs_info }
 
 ## Prompt
-PROMPT='%F{green}%n@%m%f %F{blue}%~%f %F{red}$vcs_info_msg_0_%f %F{blue}$%f '
+PROMPT='%F{green}%n@%m%f %F{cyan}%~%f %F{red}$vcs_info_msg_0_%f %F{cyan}$%f '
 
 # Complement
 autoload -Uz compinit && compinit # Enable
