@@ -1,0 +1,2 @@
+" Keybind
+inoremap <silent> jj <ESC>
