@@ -72,6 +72,11 @@ alias pym='python main.py'
 ## OS specific
 case ${OSTYPE} in
     darwin*)
+        alias accn='acc new'
+        alias accs='acc s --skip-filename -- --guess-python-interpreter pypy'
+        alias ojt='oj t -c "python main.py"'
+        alias op='open'
+        alias vatctmp='vim ~/Library/Preferences/atcoder-cli-nodejs/python/main.py'
         ;;
     linux*)
         alias open='xdg-open'
