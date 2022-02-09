@@ -79,6 +79,6 @@ case ${OSTYPE} in
         alias vatctmp='vim ~/Library/Preferences/atcoder-cli-nodejs/python/main.py'
         ;;
     linux*)
-        alias open='xdg-open'
+        alias op='xdg-open'
 esac
 
