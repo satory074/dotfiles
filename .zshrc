@@ -21,11 +21,6 @@ if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-# Python
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-
 # Aliases
 ## Extended Command
 alias cda='(){cd $1 && ls -a1}'
@@ -66,7 +61,6 @@ alias grst='git reset'
 alias gs='git status'
 
 ## Python
-alias pye='pyenv'
 alias pym='python main.py'
 
 ## OS specific
@@ -81,4 +75,20 @@ case ${OSTYPE} in
     linux*)
         alias op='xdg-open'
 esac
+
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/satory074/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/satory074/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/satory074/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/satory074/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
 
