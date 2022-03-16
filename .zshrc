@@ -17,9 +17,7 @@ autoload -Uz compinit && compinit # Enable
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # Allow lower case
 
 # Highlighting
-if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
+source /Users/satory074/dotfiles/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Aliases
 ## Extended Command
