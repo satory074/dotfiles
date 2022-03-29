@@ -17,7 +17,7 @@ autoload -Uz compinit && compinit # Enable
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # Allow lower case
 
 # Highlighting
-source /Users/satory074/dotfiles/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOME/dotfiles/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Aliases
 ## Extended Command
@@ -71,6 +71,7 @@ alias catctmp='cda `acc config-dir`'
 case ${OSTYPE} in
     darwin*)
         alias op='open'
+        export PATH=$HOME/.nodebrew/current/bin:$PATH
         ;;
     linux*)
         alias op='xdg-open'
@@ -79,16 +80,15 @@ esac
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/satory074/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('$HOME/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/satory074/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/satory074/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/satory074/anaconda3/bin:$PATH"
+        export PATH="$HOME/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
