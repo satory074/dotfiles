@@ -62,7 +62,7 @@ alias gs='git status'
 alias pym='python main.py'
 
 # AtCoder
-alias accn='(){acc new $1 && code $1}'
+alias accn='(){acc new $1 && code $1 && cda $1}'
 alias accs='acc s --skip-filename -- --guess-python-interpreter pypy'
 alias ojt='oj t -c "python main.py"'
 alias catctmp='cda `acc config-dir`'
