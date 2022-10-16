@@ -95,3 +95,5 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 conda activate base
+
+. /usr/local/opt/asdf/libexec/asdf.sh
