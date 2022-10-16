@@ -1,3 +1,4 @@
+ln -fns $HOME/dotfiles/.default-npm-packages $HOME/.default-npm-packages
 ln -fns $HOME/dotfiles/.gitconfig $HOME/.gitconfig
 ln -fns $HOME/dotfiles/.vimrc $HOME/.vimrc
 ln -fns $HOME/dotfiles/.vimrc_vs $HOME/.vimrc_vs
