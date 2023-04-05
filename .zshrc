@@ -97,3 +97,6 @@ unset __conda_setup
 conda activate base
 
 . /usr/local/opt/asdf/libexec/asdf.sh
+
+# Go lang
+export PATH=$PATH:/usr/local/go/bin
