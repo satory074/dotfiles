@@ -61,10 +61,15 @@ alias gs='git status'
 ## Python
 alias pym='python main.py'
 
+## Go
+alias grm='go run main.go'
+
 # AtCoder
 alias accn='(){acc new $1 && code $1 && cda $1}'
 alias accs='acc s --skip-filename -- --guess-python-interpreter pypy'
+alias accsg='acc s main.go'
 alias ojt='oj t -c "python main.py"'
+alias ojtg='oj t -c "go run main.go"'
 alias catctmp='cda `acc config-dir`'
 
 ## OS specific
