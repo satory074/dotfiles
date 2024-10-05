@@ -9,16 +9,6 @@ zstyle ':vcs_info:*' formats "%F{red}%c%u(%b)%f"
 zstyle ':vcs_info:*' actionformats '[%b|%a]'
 precmd () { vcs_info }
 
-## Prompt
-PROMPT='%F{green}%n@%m%f %F{cyan}%~%f %F{red}$vcs_info_msg_0_%f %F{cyan}$%f '
-
-# Complement
-autoload -Uz compinit && compinit # Enable
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # Allow lower case
-
-# Highlighting
-source $HOME/dotfiles/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 # Aliases
 ## Extended Command
 alias cda='(){cd $1 && ls -a1}'
@@ -79,19 +69,8 @@ case ${OSTYPE} in
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
     esac
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('$HOME/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$HOME/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "$HOME/opt/anaconda3/etc/profile.d/conda.sh"  # commented out by conda initialize
-    else
-        export PATH="$HOME/opt/anaconda3/bin:$PATH"  # commented out by conda initialize
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-conda activate base
+. "$HOME/.cargo/env"
