@@ -7,3 +7,13 @@
 	editor = vim -c \"set fenc=utf-8\"
 [ini]
 	defaultBranch = main
+[safe]
+	directory = *
+[http]
+	sslverify = false
+[credential "https://github.com"]
+	helper = 
+	helper = !/home/linuxbrew/.linuxbrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/home/linuxbrew/.linuxbrew/bin/gh auth git-credential
