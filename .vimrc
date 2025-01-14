@@ -32,4 +32,3 @@ set shiftwidth=4                " Number of SPACE per indent
 
 " Other
 set virtualedit=onemore         " Cursor can move up to one character ahead of the end of the line
-
