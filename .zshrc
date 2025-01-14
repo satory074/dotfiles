@@ -1,36 +1,26 @@
-# ----------------------------------------------
-# 1. Oh My Zsh 本体の場所
+# oh-my-zsh
 export ZSH="$HOME/.oh-my-zsh"
-
-# ----------------------------------------------
-# 2. テーマ設定 (Oh My Zsh)
 ZSH_THEME="agnoster"
 
-# ----------------------------------------------
-# 3. プラグイン設定
-#    - あなたの元々の alias と衝突しないか注意
 plugins=(
   git
   zsh-autosuggestions
   zsh-syntax-highlighting
 )
 
-# ----------------------------------------------
-# 4. Oh My Zsh 読み込み (最重要)
 source $ZSH/oh-my-zsh.sh
 
-# ----------------------------------------------
-# 5. 以下にあなたのカスタム設定を入れる
+# --------------------------------
+# Path
+export BASECAMP_PATH=$HOME/basecamp
+export SRC_PATH=$BASECAMP_PATH/src
 
-# ---- (B) エイリアス ----
 # Extended Command
 alias cda='(){ cd "$1" && ls -a1 }'
 alias lsa='ls -la'
 alias mkd='(){ mkdir "$1" && cd "$1" }'
 
-# Path
-export BASECAMP_PATH=$HOME/basecamp
-export SRC_PATH=$BASECAMP_PATH/src
+# AtCoder
 alias catc='cda "$SRC_PATH/AtCoder/satory074"'
 alias cbas='cda "$BASECAMP_PATH"'
 alias cdot='cda "$HOME/dotfiles"'
@@ -43,8 +33,6 @@ alias svr='source ~/.vimrc'
 alias szr='source ~/.zshrc'
 
 # Git
-# (Oh My Zsh の "plugins=(git)" と重複するものもあるかもしれませんが
-#  自前で独自に使いやすいエイリアスがあるなら、上書きする形でもOKです)
 alias ga='(){ git add "$1" && git status }'
 alias gau='git add -u && git status'
 alias gbr='git branch'
@@ -65,21 +53,17 @@ alias grir='git rebase -i --root'
 alias grst='git reset'
 alias gs='git status'
 
+# Python
+alias pym='python main.py'
+
 # uv
-uvi () {
-  uv init "$1"
-  cd "$1"
-  lsa
-}
+alias uvi='uv init "$1" && cd "$1" && ls -la'
 alias uva='uv --native-tls add'
 alias uvar='uv --native-tls add -r requirements.txt'
 alias uvr='uv run'
 alias uvrm='uv run main.py'
 alias venva='source .venv/bin/activate'
 alias venvd='deactivate'
-
-# Python
-alias pym='python main.py'
 
 # OS specific
 case "${OSTYPE}" in
@@ -92,6 +76,3 @@ case "${OSTYPE}" in
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         ;;
 esac
-
-
-. "$HOME/.local/bin/env"

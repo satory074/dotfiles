@@ -1,3 +1,20 @@
 [user]
-	name = satory074
-	email = satory074@gmail.com
+    name = satory074
+    email = satory074@gmail.com
+
+[core]
+    editor = vim -c \"set fenc=utf-8\"
+
+[init]
+    defaultBranch = main
+
+[fetch]
+    prune = true
+
+[credential "https://github.com"]
+    helper =
+    helper = !/home/linuxbrew/.linuxbrew/bin/gh auth git-credential
+
+[credential "https://gist.github.com"]
+    helper =
+    helper = !/home/linuxbrew/.linuxbrew/bin/gh auth git-credential
