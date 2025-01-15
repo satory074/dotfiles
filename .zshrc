@@ -11,16 +11,15 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # --------------------------------
-# Path
-export BASECAMP_PATH=$HOME/basecamp
-export SRC_PATH=$BASECAMP_PATH/src
-
 # Extended Command
 alias cda='(){ cd "$1" && ls -a1 }'
 alias lsa='ls -la'
 alias mkd='(){ mkdir "$1" && cd "$1" }'
 
-# AtCoder
+# Path
+export BASECAMP_PATH=$HOME/basecamp
+export SRC_PATH=$BASECAMP_PATH/src
+
 alias catc='cda "$SRC_PATH/AtCoder/satory074"'
 alias cbas='cda "$BASECAMP_PATH"'
 alias cdot='cda "$HOME/dotfiles"'
@@ -44,7 +43,7 @@ alias gd='git diff'
 alias ghas='gh auth switch --hostname github.com --user "$1"'
 alias glg='git log --oneline'
 alias gmg='git merge'
-alias gpom='git push origin main'
+alias gpom='git push -u origin main'
 alias gpfom='git push --force-with-lease origin main'
 alias gprom='git pull -r origin main'
 alias gptag='git push origin --tags'
@@ -62,8 +61,15 @@ alias uva='uv --native-tls add'
 alias uvar='uv --native-tls add -r requirements.txt'
 alias uvr='uv run'
 alias uvrm='uv run main.py'
+alias uver='uv export -o requirements.txt --no-hashes'
 alias venva='source .venv/bin/activate'
 alias venvd='deactivate'
+
+# AtCoder
+alias accn='(){acc new $1 && code $1 && cda $1}'
+alias accs='acc s --skip-filename -- --guess-python-interpreter pypy'
+alias ojt='oj t -c "python main.py"'
+alias catctmp='cda `acc config-dir`'
 
 # OS specific
 case "${OSTYPE}" in
@@ -76,3 +82,5 @@ case "${OSTYPE}" in
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         ;;
 esac
+
+. "$HOME/.local/bin/env"
