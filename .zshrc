@@ -1,3 +1,5 @@
+source ~/dotfiles/.env
+
 # oh-my-zsh
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="agnoster"
@@ -51,6 +53,20 @@ alias grbs='git rebase'
 alias grir='git rebase -i --root'
 alias grst='git reset'
 alias gs='git status'
+
+function gmain() {
+    git config --global user.name "$MAIN_GIT_USER"
+    git config --global user.email "$MAIN_GIT_EMAIL"
+    source ~/.zshrc
+    git config user.name
+}
+
+function gsub() {
+    git config --global user.name "$SUB_GIT_USER"
+    git config --global user.email "$SUB_GIT_EMAIL"
+    source ~/.zshrc
+    git config user.name
+}
 
 # Python
 alias pym='python main.py'
