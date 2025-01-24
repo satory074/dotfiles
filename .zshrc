@@ -12,6 +12,7 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+
 # --------------------------------
 # Extended Command
 alias cda='(){ cd "$1" && ls -a1 }'
@@ -45,7 +46,7 @@ alias gd='git diff'
 alias ghas='gh auth switch --hostname github.com --user "$1"'
 alias glg='git log --oneline'
 alias gmg='git merge'
-alias gpom='git push -u origin main'
+alias gpom='git push -u origin main --tags'
 alias gpfom='git push --force-with-lease origin main'
 alias gprom='git pull -r origin main'
 alias gptag='git push origin --tags'
@@ -53,6 +54,7 @@ alias grbs='git rebase'
 alias grir='git rebase -i --root'
 alias grst='git reset'
 alias gs='git status'
+alias gtag='git tag'
 
 function gmain() {
     git config --global user.name "$MAIN_GIT_USER"
