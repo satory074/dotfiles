@@ -43,6 +43,8 @@ alias gchb='git checkout -b'
 alias gcan='git commit --amend --no-edit'
 alias gcm='git commit -m'
 alias gd='git diff'
+alias ghal'gh auth login'
+alias ghic='gh issue create'
 alias glg='git log --oneline'
 alias gmg='git merge'
 alias gpom='git push -u origin main --tags'
@@ -58,15 +60,15 @@ alias gtag='git tag'
 function gmain() {
     git config --global user.name "$MAIN_GIT_USER"
     git config --global user.email "$MAIN_GIT_EMAIL"
-    source ~/.zshrc
     git config user.name
+    gh auth switch --hostname github.com --user "$MAIN_GIT_USER"
 }
 
 function gsub() {
     git config --global user.name "$SUB_GIT_USER"
     git config --global user.email "$SUB_GIT_EMAIL"
-    source ~/.zshrc
     git config user.name
+    gh auth switch --hostname github.com --user "$SUB_GIT_USER"
 }
 
 # Python
