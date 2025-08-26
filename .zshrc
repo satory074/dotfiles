@@ -37,8 +37,13 @@ alias szr='source ~/.zshrc'
 # Git
 alias ga='(){ git add "$1" && git status }'
 alias gau='git add -u && git status'
+alias gb='git branch'
 alias gbr='git branch'
+alias gbd='git branch -d'
+alias gbd='git branch -m'
 alias gch='git checkout'
+alias gcho='git checkout'
+alias gchob='git checkout -b'
 alias gcan='git commit --amend --no-edit'
 alias gcm='git commit -m'
 alias gd='git diff'
@@ -127,3 +132,4 @@ export NVM_DIR="$HOME/.nvm"
 
 # export GEMINI_API_KEY="REDACTED_GEMINI_API_KEY"
 export GEMINI_MODEL="gemini-2.5-pro"
+export PATH="$PATH":"$HOME/.pub-cache/bin"
