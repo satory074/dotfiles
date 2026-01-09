@@ -39,22 +39,26 @@ alias ga='(){ git add "$1" && git status }'
 alias gau='git add -u && git status'
 alias gbr='git branch'
 alias gch='git checkout'
-alias gchb='git checkout -b'
 alias gcan='git commit --amend --no-edit'
 alias gcm='git commit -m'
 alias gd='git diff'
 alias ghal'gh auth login'
-alias ghic='gh issue create'
+alias ghicr='gh issue create'
+alias ghicl='gh issue close'
 alias glg='git log --oneline'
-alias gmg='git merge'
+alias gme='git merge'
 alias gpom='git push -u origin main --tags'
 alias gpfom='git push --force-with-lease origin main'
 alias gprom='git pull -r origin main'
+alias gpush='git push'
 alias gptag='git push origin --tags'
 alias grbs='git rebase'
 alias grir='git rebase -i --root'
 alias grst='git reset'
 alias gs='git status'
+alias gsw='git switch'
+alias gswc='git switch -c'
+alias gswm='git switch main'
 alias gtag='git tag'
 
 function gmain() {
@@ -90,6 +94,19 @@ alias accs='acc s --skip-filename -- --guess-python-interpreter pypy'
 alias ojt='oj t -c "python main.py"'
 alias catctmp='cda `acc config-dir`'
 
+# --- Netskope CA Certificate Configuration ---
+# Python (requests), AWS CLI, curl, etc.
+export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+export AWS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+export CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+
+# Node.js
+export NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
+
+# Git
+export GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt
+# -------------------------------------------
+
 # OS specific
 case "${OSTYPE}" in
     darwin*)
@@ -103,3 +120,10 @@ case "${OSTYPE}" in
 esac
 
 . "$HOME/.local/bin/env"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# export GEMINI_API_KEY="REDACTED_GEMINI_API_KEY"
+export GEMINI_MODEL="gemini-2.5-pro"
