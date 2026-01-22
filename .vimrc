@@ -66,6 +66,7 @@ if has('patch-7.4.2109')
   set display+=truncate
 endif
 set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+set list
 
 set formatoptions+=j
 set history=1000
