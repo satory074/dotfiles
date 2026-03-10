@@ -1,0 +1,73 @@
+{
+  "permissions": {
+    "allow": [
+      "Search(*)",
+      "Read(*)",
+      "Edit(*)",
+      "Write(*)"
+    ]
+  },
+  "model": "sonnet",
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Glass.aiff"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.message' | xargs say"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Tink.aiff"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_name' | xargs say"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "^(startup|resume)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.cwd'); model=$(echo \"$input\" | jq -r '.model'); ( sleep 5; remote_id=$(grep 'Session created:' ~/.claude/debug/latest 2>/dev/null | head -1 | grep -o 'session_[A-Za-z0-9]*'); if [ -n \"$remote_id\" ]; then url=\"https://claude.ai/code/$remote_id\"; url_line=\"\\\\n**URL:** $url\"; else url_line=\"\"; fi; curl -s -X POST -H 'Content-Type: application/json' -d \"{\\\"embeds\\\":[{\\\"title\\\":\\\"Claude Code Session Started\\\",\\\"description\\\":\\\"**Directory:** $cwd\\\\n**Model:** $model$url_line\\\",\\\"color\\\":3447003,\\\"timestamp\\\":\\\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\\\"}]}\" YOUR_DISCORD_WEBHOOK_URL ) &"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
+  "alwaysThinkingEnabled": true
+}

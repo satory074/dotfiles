@@ -1,4 +1,4 @@
-source ~/dotfiles/.env
+[ -f "$HOME/dotfiles/.env" ] && source "$HOME/dotfiles/.env"
 
 # oh-my-zsh
 export ZSH="$HOME/.oh-my-zsh"
@@ -40,15 +40,15 @@ alias gau='git add -u && git status'
 alias gb='git branch'
 alias gbr='git branch'
 alias gbd='git branch -d'
-alias gbd='git branch -m'
+alias gbm='git branch -m'
 alias gch='git checkout'
 alias gcho='git checkout'
 alias gchob='git checkout -b'
 alias gcan='git commit --amend --no-edit'
 alias gcm='git commit -m'
 alias gd='git diff'
-alias ghal'gh auth login'
-alias ghicr='gh issue create'
+alias ghal='gh auth login'
+alias ghic='gh issue create'
 alias ghicl='gh issue close'
 alias glg='git log --oneline'
 alias gme='git merge'
@@ -137,3 +137,7 @@ export NVM_DIR="$HOME/.nvm"
 export GEMINI_MODEL="gemini-2.5-pro"
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 
+# History
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+setopt share_history
