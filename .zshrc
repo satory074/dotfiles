@@ -112,6 +112,9 @@ export NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
 export GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt
 # -------------------------------------------
 
+# npx
+alias nndp='npx netlify deploy --prod'
+
 # OS specific
 case "${OSTYPE}" in
     darwin*)
@@ -133,3 +136,4 @@ export NVM_DIR="$HOME/.nvm"
 # export GEMINI_API_KEY="REDACTED_GEMINI_API_KEY"
 export GEMINI_MODEL="gemini-2.5-pro"
 export PATH="$PATH":"$HOME/.pub-cache/bin"
+
