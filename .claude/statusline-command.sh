@@ -66,6 +66,12 @@ if [ -n "$cwd" ] && [ -d "$cwd" ]; then
   git_branch=$(git -C "$cwd" --no-optional-locks rev-parse --abbrev-ref HEAD 2>/dev/null || true)
 fi
 
+# cwd を ~ 表記に変換
+cwd_display=""
+if [ -n "$cwd" ]; then
+  cwd_display=$(echo "$cwd" | sed "s|^$HOME|~|")
+fi
+
 # ---------- Line stats from stdin ----------
 git_stats=""
 if [ "$lines_added" -gt 0 ] 2>/dev/null || [ "$lines_removed" -gt 0 ] 2>/dev/null; then
@@ -209,6 +215,10 @@ line1="🤖 ${model_name}${SEP}${ctx_color}📊 ${ctx_pct_int}%${RESET}"
 
 if [ -n "$git_stats" ]; then
   line1+="${SEP}✏️  ${GREEN}${git_stats}${RESET}"
+fi
+
+if [ -n "$cwd_display" ]; then
+  line1+="${SEP}📁 ${cwd_display}"
 fi
 
 if [ -n "$git_branch" ]; then
