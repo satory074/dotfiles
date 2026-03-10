@@ -1,5 +1,11 @@
 [ -f "$HOME/dotfiles/.env" ] && source "$HOME/dotfiles/.env"
 
+# History
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=100000
+SAVEHIST=100000
+setopt EXTENDED_HISTORY
+
 # oh-my-zsh
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="agnoster"
@@ -137,7 +143,10 @@ export NVM_DIR="$HOME/.nvm"
 export GEMINI_MODEL="gemini-2.5-pro"
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 
-# History
+# History (setopt)
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
 setopt share_history
+
+# Local overrides
+for f in "$HOME/.zsh/"*.zsh; do [ -f "$f" ] && source "$f"; done

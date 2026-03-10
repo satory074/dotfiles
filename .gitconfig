@@ -11,6 +11,15 @@
 [fetch]
     prune = true
 
+[pull]
+    rebase = true
+
+[push]
+    default = simple
+
+[rerere]
+    enabled = true
+
 [credential "https://github.com"]
     helper =
     helper = !gh auth git-credential

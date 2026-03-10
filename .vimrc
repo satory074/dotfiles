@@ -1,3 +1,6 @@
+syntax on
+filetype plugin indent on
+
 " Keybind
 inoremap <silent> jj <ESC>
 " let mapleader = '\ '
@@ -24,6 +27,8 @@ set nobackup                    " Don't create *.*~
 " Search
 set ignorecase                  " Don't distinguish between upper and lower case when searching
 set smartcase                   " Distinuish only upper case letters when searching
+set incsearch                   " Highlight matches as you type
+set hlsearch                    " Highlight all search matches
 
 " Tab
 set expandtab                   " Converting TAB to SPACE

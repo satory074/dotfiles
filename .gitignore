@@ -1,10 +1,12 @@
 .DS_Store
 .env
+*.log
 
 /.zsh/*
 /plugins/*
 
 !/.zsh/.gitkeep
+!/plugins/.gitkeep
 
 /.claude/settings.json
 

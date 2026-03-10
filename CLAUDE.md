@@ -9,11 +9,9 @@ Personal dotfiles for macOS + zsh, managed via symlinks. `install.sh` creates sy
 ## Installing / Applying Changes
 
 ```bash
-bash ~/dotfiles/install.sh   # Full setup (checks deps, creates symlinks)
+bash ~/dotfiles/install.sh   # Full setup: installs deps (Homebrew, gh, oh-my-zsh), creates symlinks
 source ~/.zshrc              # Reload shell config after .zshrc edits
 ```
-
-`install.sh` installs Homebrew and gh CLI if missing, then creates symlinks and sources `.zshrc`.
 
 ## Symlink Map
 
@@ -29,27 +27,18 @@ source ~/.zshrc              # Reload shell config after .zshrc edits
 | `.claude/CLAUDE.md` | `~/.claude/CLAUDE.md` |
 | `.claude/commands` | `~/.claude/commands` |
 
-## Key Files
-
-- `.zshrc` — Single-file zsh config: aliases, functions, PATH, oh-my-zsh setup
-- `.claude/CLAUDE.md` — Global Claude Code instructions (symlinked to `~/.claude/CLAUDE.md`)
-- `.claude/settings.json` — Claude Code hooks + permissions (git-ignored; copy from `settings.json.sample`)
-- `.claude/commands/` — Custom Claude Code slash commands (`deploy-production.md`, `gemini-search.md`)
-- `.claude/statusline-command.sh` — Status line script (reads Claude session JSON, displays model/context/git/cwd)
-- `.zsh/` — Local-only zsh overrides (git-ignored except `.gitkeep`)
-- `plugins/` — External plugins cloned at install time (RictyDiminished font; git-ignored)
-
 ## Key Conventions
 
-**Dual Git accounts**: `gmain` / `gsub` functions in `.zshrc` switch global git identity + `gh auth`. Credentials come from `~/dotfiles/.env` (git-ignored). Template is `.env-sample`.
+**Dual Git accounts**: `gmain` / `gsub` functions in `.zshrc` switch global git identity + `gh auth`. Credentials come from `~/dotfiles/.env` (git-ignored). Copy `.env-sample` → `.env` and fill in `MAIN_GIT_USER`, `MAIN_GIT_EMAIL`, `SUB_GIT_USER`, `SUB_GIT_EMAIL`.
 
-**`.env` setup**: Copy `.env-sample` → `.env` and fill in `MAIN_GIT_USER`, `MAIN_GIT_EMAIL`, `SUB_GIT_USER`, `SUB_GIT_EMAIL`.
+**Local zsh overrides**: `.zsh/*.zsh` files are auto-loaded at the end of `.zshrc`. Use this for machine-specific config (git-ignored except `.gitkeep`).
 
 **OS detection**: `.zshrc` has a `case "${OSTYPE}"` block — `darwin*` for macOS, `linux-gnu` for WSL/Linux (Linuxbrew path).
 
-**`settings.json` setup**: Copy `.claude/settings.json.sample` → `.claude/settings.json` and replace `YOUR_DISCORD_WEBHOOK_URL` with actual webhook.
+**`settings.json` setup**: Copy `.claude/settings.json.sample` → `.claude/settings.json` and replace `YOUR_DISCORD_WEBHOOK_URL` with actual webhook. File is git-ignored.
+
+**Statusline**: `.claude/statusline-command.sh` reads Claude session JSON via stdin, fetches rate limit headers from the Anthropic API (cached 360s in `/tmp/claude-usage-cache.json`), and outputs 3 lines: model/context/git info, 5h rate limit bar, 7d rate limit bar.
 
 ## Known Issues
 
-- `.zshrc` line 48: `alias ghal'gh auth login'` is missing `=` (syntax error, zsh silently skips it)
-- `.gitconfig` credential helper path is hardcoded to Linuxbrew (`/home/linuxbrew/...`), breaks on macOS unless `gh` is in PATH
+- `.gitconfig` credential helper: macOS uses `gh auth git-credential` (currently configured). If `gh` is not in PATH, git credential lookups will fail.
