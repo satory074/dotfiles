@@ -24,10 +24,14 @@ source $ZSH/oh-my-zsh.sh
 alias cda='(){ cd "$1" && ls -a1 }'
 alias lsa='ls -la'
 alias mkd='(){ mkdir "$1" && cd "$1" }'
+function cpa() {
+    cat "$1" | iconv -t CP932 | clip.exe
+}
 
 # Path
 export BASECAMP_PATH=$HOME/basecamp
 export SRC_PATH=$BASECAMP_PATH/src
+alias vweek='vim $SRC_PATH/weekly-memo/current.md'
 
 alias catc='cda "$SRC_PATH/AtCoder/satory074"'
 alias cbas='cda "$BASECAMP_PATH"'
@@ -69,7 +73,9 @@ alias grst='git reset'
 alias gs='git status'
 alias gsw='git switch'
 alias gswc='git switch -c'
+alias gswd='git switch develop'
 alias gswm='git switch main'
+alias gsws='git switch staging'
 alias gtag='git tag'
 
 function gmain() {

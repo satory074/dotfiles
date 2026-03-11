@@ -20,6 +20,7 @@ set backspace=indent,eol,start  " Valid Backspace
 set virtualedit=onemore         " Cursor can move up to one character ahead of the end of the line
 set formatoptions+=j
 set nrformats-=octal
+set clipboard=unnamedplus
 
 " Indent/Tab
 set expandtab                   " Converting TAB to SPACE
