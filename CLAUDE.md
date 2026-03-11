@@ -26,6 +26,7 @@ source ~/.zshrc              # Reload shell config after .zshrc edits
 | `.claude/statusline-command.sh` | `~/.claude/statusline-command.sh` |
 | `.claude/CLAUDE.md` | `~/.claude/CLAUDE.md` |
 | `.claude/commands` | `~/.claude/commands` |
+| `.claude/hooks` | `~/.claude/hooks` |
 
 ## Key Conventions
 

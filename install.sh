@@ -41,6 +41,7 @@ ln -fns "$DOTFILES/.claude/settings.json" "$HOME/.claude/settings.json"
 ln -fns "$DOTFILES/.claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
 ln -fns "$DOTFILES/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 ln -fns "$DOTFILES/.claude/commands" "$HOME/.claude/commands"
+ln -fns "$DOTFILES/.claude/hooks" "$HOME/.claude/hooks"
 
 # ----------------------------------------
 # Plugins

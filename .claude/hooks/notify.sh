@@ -28,6 +28,7 @@ osascript -e "display notification \"$MSG\" with title \"Claude Code\""
 
 # 読み上げ（前の say を止めてから新しいものを起動）
 if [ -z "$AUDIO_OFF" ]; then
-  pkill -x say 2>/dev/null
+  killall say 2>/dev/null
+  pkill -f "xargs say" 2>/dev/null
   say "$MSG" &
 fi
