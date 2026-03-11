@@ -44,6 +44,15 @@ ln -fns "$DOTFILES/.claude/commands" "$HOME/.claude/commands"
 ln -fns "$DOTFILES/.claude/hooks" "$HOME/.claude/hooks"
 
 # ----------------------------------------
+# Modern CLI tools
+# ----------------------------------------
+for pkg in bat eza fzf zoxide fd ripgrep; do
+    brew list "$pkg" &>/dev/null || brew install "$pkg"
+done
+# fzf key bindings and completion
+"$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-bash --no-update-rc
+
+# ----------------------------------------
 # Plugins
 # ----------------------------------------
 if [ ! -d "$DOTFILES/plugins/RictyDiminished" ]; then

@@ -63,6 +63,16 @@ set encoding=utf-8
 set fileencoding=utf-8
 set fileformats=unix,dos,mac
 set nobackup                    " Don't create *.*~
+set directory=/tmp//            " Consolidate swap files in /tmp
+
+" Persistent undo
+if has('persistent_undo')
+  set undofile
+  set undodir=~/.vim/undo/
+endif
+
+" Remove trailing whitespace on save
+autocmd BufWritePre * :%s/\s\+$//e
 
 " History/Session
 set history=1000

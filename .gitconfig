@@ -3,7 +3,7 @@
 	email = ryouta.satou@rakus.co.jp
 
 [core]
-    editor = vim -c \"set fenc=utf-8\"
+    editor = vim -c "set fenc=utf-8"
 
 [init]
     defaultBranch = main
@@ -15,7 +15,26 @@
     rebase = true
 
 [push]
-    default = simple
+    default = current
+    autoSetupRemote = true
+
+[diff]
+    colorMoved = default
+
+[merge]
+    conflictstyle = zdiff3
+
+[branch]
+    sort = -committerdate
+
+[column]
+    ui = auto
+
+[color]
+    ui = auto
+
+[tag]
+    sort = version:refname
 
 [rerere]
     enabled = true
@@ -27,5 +46,9 @@
 [credential "https://gist.github.com"]
     helper =
     helper = !gh auth git-credential
-[push]
-	default = current
+
+[alias]
+    lg = log --oneline --graph --decorate --all
+    staged = diff --cached
+    undo = reset HEAD~1 --mixed
+    aliases = config --get-regexp alias

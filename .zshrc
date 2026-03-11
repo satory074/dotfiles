@@ -6,6 +6,11 @@ HISTSIZE=100000
 SAVEHIST=100000
 setopt EXTENDED_HISTORY
 
+# Environment
+export EDITOR=vim
+export LANG=ja_JP.UTF-8
+export LC_ALL=ja_JP.UTF-8
+
 # oh-my-zsh
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="agnoster"
@@ -14,6 +19,8 @@ plugins=(
   git
   zsh-autosuggestions
   zsh-syntax-highlighting
+  sudo
+  docker
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -129,6 +136,7 @@ alias nndp='npx netlify deploy --prod'
 case "${OSTYPE}" in
     darwin*)
         alias op='open'
+        alias ls='ls -G'
         ;;
     linux-gnu)
         alias op='explorer.exe'
@@ -136,6 +144,30 @@ case "${OSTYPE}" in
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         ;;
 esac
+
+# Modern CLI tools (installed via brew)
+if command -v bat >/dev/null 2>&1; then
+    alias cat='bat --paging=never'
+fi
+if command -v eza >/dev/null 2>&1; then
+    alias ls='eza --icons'
+    alias ll='eza -l --icons --git'
+    alias la='eza -la --icons --git'
+    alias lt='eza --tree --icons -L 2'
+fi
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init zsh)"
+    alias cd='z'
+fi
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if command -v fd >/dev/null 2>&1; then
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+fi
+export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
+
+# Utility functions
+function psg() { ps aux | grep -v grep | grep "$1" }
+function port() { lsof -i :"$1" }
 
 . "$HOME/.local/bin/env"
 
@@ -151,6 +183,12 @@ export PATH="$PATH":"$HOME/.pub-cache/bin"
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
 setopt share_history
+setopt inc_append_history
+
+# Shell behavior
+setopt AUTO_CD
+setopt CORRECT
+setopt GLOB_DOTS
 
 # Local overrides
-for f in "$HOME/.zsh/"*.zsh; do [ -f "$f" ] && source "$f"; done
+for f in "$HOME/.zsh/"*.zsh(N); do source "$f"; done
