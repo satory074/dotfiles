@@ -5,4 +5,5 @@ IS_MUTED=$(echo "$VOL_INFO" | grep -o 'output muted:[^,}]*' | awk -F: '{print $2
 VOL=$(echo "$VOL_INFO" | grep -o 'output volume:[^,}]*' | awk -F: '{print $2}' | tr -d ' ')
 [ "$IS_MUTED" = "true" ] && exit 0
 [ "$VOL" -eq 0 ] 2>/dev/null && exit 0
+pkill -x afplay 2>/dev/null
 afplay /System/Library/Sounds/Glass.aiff &

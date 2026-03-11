@@ -6,13 +6,13 @@ VOL=$(echo "$VOL_INFO" | grep -o 'output volume:[^,}]*' | awk -F: '{print $2}' |
 [ "$IS_MUTED" = "true" ] && AUDIO_OFF=1
 [ "$VOL" -eq 0 ] 2>/dev/null && AUDIO_OFF=1
 
-# デバウンス: 3秒以内の連続呼び出しをスキップ
+# デバウンス: 15秒以内の連続呼び出しをスキップ（say の発話時間をカバー）
 LOCK_FILE="/tmp/claude-notify-cooldown"
 NOW=$(date +%s)
 if [ -f "$LOCK_FILE" ]; then
   LAST=$(cat "$LOCK_FILE")
   ELAPSED=$(( NOW - LAST ))
-  [ "$ELAPSED" -lt 3 ] && exit 0
+  [ "$ELAPSED" -lt 15 ] && exit 0
 fi
 echo "$NOW" > "$LOCK_FILE"
 
@@ -26,5 +26,8 @@ MSG="${MSG:0:50}"
 # macOS 通知センターに視覚的バナーを表示
 osascript -e "display notification \"$MSG\" with title \"Claude Code\""
 
-# 読み上げ（非同期: フックをブロックしない）
-[ -z "$AUDIO_OFF" ] && say "$MSG" &
+# 読み上げ（前の say を止めてから新しいものを起動）
+if [ -z "$AUDIO_OFF" ]; then
+  pkill -x say 2>/dev/null
+  say "$MSG" &
+fi
