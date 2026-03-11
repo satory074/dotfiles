@@ -78,7 +78,7 @@ if [ "$lines_added" -gt 0 ] 2>/dev/null || [ "$lines_removed" -gt 0 ] 2>/dev/nul
   git_stats="+${lines_added}/-${lines_removed}"
 fi
 
-# ---------- Rate limit via Haiku probe (cached 360s) ----------
+# ---------- Rate limit via OAuth usage API (cached 360s) ----------
 CACHE_FILE="/tmp/claude-usage-cache.json"
 CACHE_TTL=360
 FIVE_HOUR_UTIL=""
@@ -99,35 +99,39 @@ fetch_usage() {
     token="$raw_token"
   fi
 
-  # Extract access token from JSON wrapper
-  # Note: keychain JSON may be truncated, so skip jq -e validation
-  # and extract the field directly (jq can read fields from partial JSON)
+  # Extract OAuth access token from JSON wrapper
   local access_token json_str
   json_str=$(echo "$token" | sed 's/^[^{]*//')
   access_token=$(echo "$json_str" | jq -r '.claudeAiOauth.accessToken // .accessToken // empty' 2>/dev/null)
   [ -z "$access_token" ] && return 1
 
-  # Tiny Haiku call (max_tokens=1) to get rate limit response headers
-  local header_file
-  header_file=$(mktemp)
-  curl -sD "$header_file" --max-time 8 -o /dev/null \
-    -H "x-api-key: ${access_token}" \
+  # Clear CURL_CA_BUNDLE if the file doesn't exist (avoids macOS vs Linux path mismatch)
+  local _curl=(curl)
+  [ -n "${CURL_CA_BUNDLE:-}" ] && [ ! -f "$CURL_CA_BUNDLE" ] && _curl=(env -u CURL_CA_BUNDLE curl)
+
+  # Fetch usage via OAuth endpoint (returns JSON with utilization percentages)
+  local response
+  response=$("${_curl[@]}" -s --max-time 8 \
+    -H "Authorization: Bearer ${access_token}" \
     -H "Content-Type: application/json" \
-    -H "User-Agent: claude-code/${cc_version:-0.0.0}" \
-    -H "anthropic-version: 2023-06-01" \
-    -d '{"model":"claude-haiku-4-5-20251001","max_tokens":1,"messages":[{"role":"user","content":"h"}]}' \
-    "https://api.anthropic.com/v1/messages" 2>/dev/null || true
-  [ ! -s "$header_file" ] && rm -f "$header_file" && return 1
+    -H "anthropic-beta: oauth-2025-04-20" \
+    "https://api.anthropic.com/api/oauth/usage" 2>/dev/null) || true
+  [ -z "$response" ] && return 1
 
-  # Parse rate limit headers
-  local h5_util h5_reset h7_util h7_reset
-  h5_util=$(grep -i 'anthropic-ratelimit-unified-5h-utilization' "$header_file" | tr -d '\r' | awk '{print $2}')
-  h5_reset=$(grep -i 'anthropic-ratelimit-unified-5h-reset' "$header_file" | tr -d '\r' | awk '{print $2}')
-  h7_util=$(grep -i 'anthropic-ratelimit-unified-7d-utilization' "$header_file" | tr -d '\r' | awk '{print $2}')
-  h7_reset=$(grep -i 'anthropic-ratelimit-unified-7d-reset' "$header_file" | tr -d '\r' | awk '{print $2}')
-  rm -f "$header_file"
-
+  # Parse JSON response (utilization is 0-100 percentage, resets_at is ISO 8601)
+  local h5_util h5_reset_iso h7_util h7_reset_iso
+  h5_util=$(echo "$response" | jq -r '.five_hour.utilization // empty' 2>/dev/null)
+  h5_reset_iso=$(echo "$response" | jq -r '.five_hour.resets_at // empty' 2>/dev/null)
+  h7_util=$(echo "$response" | jq -r '.seven_day.utilization // empty' 2>/dev/null)
+  h7_reset_iso=$(echo "$response" | jq -r '.seven_day.resets_at // empty' 2>/dev/null)
   [ -z "$h5_util" ] && return 1
+
+  # Convert ISO 8601 timestamps to epoch seconds
+  local h5_reset h7_reset
+  h5_reset=$(date -j -f "%Y-%m-%dT%H:%M:%S" "${h5_reset_iso%%[+Z]*}" "+%s" 2>/dev/null || \
+             date -d "$h5_reset_iso" "+%s" 2>/dev/null || echo "0")
+  h7_reset=$(date -j -f "%Y-%m-%dT%H:%M:%S" "${h7_reset_iso%%[+Z]*}" "+%s" 2>/dev/null || \
+             date -d "$h7_reset_iso" "+%s" 2>/dev/null || echo "0")
 
   # Save to cache as JSON
   jq -n \
@@ -167,14 +171,14 @@ else
   fi
 fi
 
-# Convert utilization (0.0-1.0) to percentage
+# Round utilization percentage (already 0-100 from OAuth usage API)
 to_pct() {
   local val="$1"
   if [ -z "$val" ] || [ "$val" = "null" ] || [ "$val" = "0" ]; then
     echo ""
     return
   fi
-  awk "BEGIN{printf \"%.0f\", $val * 100}" 2>/dev/null || echo ""
+  awk "BEGIN{printf \"%.0f\", $val}" 2>/dev/null || echo ""
 }
 
 FIVE_HOUR_PCT=$(to_pct "$FIVE_HOUR_UTIL")
