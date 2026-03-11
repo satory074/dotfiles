@@ -30,39 +30,6 @@
           }
         ]
       }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "afplay /System/Library/Sounds/Tink.aiff"
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "jq -r '.tool_name' | xargs say"
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "matcher": "^(startup|resume)$",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.cwd'); model=$(echo \"$input\" | jq -r '.model'); ( sleep 5; remote_id=$(grep 'Session created:' ~/.claude/debug/latest 2>/dev/null | head -1 | grep -o 'session_[A-Za-z0-9]*'); if [ -n \"$remote_id\" ]; then url=\"https://claude.ai/code/$remote_id\"; url_line=\"\\\\n**URL:** $url\"; else url_line=\"\"; fi; curl -s -X POST -H 'Content-Type: application/json' -d \"{\\\"embeds\\\":[{\\\"title\\\":\\\"Claude Code Session Started\\\",\\\"description\\\":\\\"**Directory:** $cwd\\\\n**Model:** $model$url_line\\\",\\\"color\\\":3447003,\\\"timestamp\\\":\\\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\\\"}]}\" https://discord.com/api/webhooks/1306147451744292944/BHX1Jt4UG5q2c2f29ETtOw0ueqLackDC46-0SRei9E2UZpcYlD2qzTlB6nxEyA4WrEsz ) &"
-          }
-        ]
-      }
     ]
   },
   "statusLine": {
