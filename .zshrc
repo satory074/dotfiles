@@ -106,16 +106,14 @@ alias ojt='oj t -c "python main.py"'
 alias catctmp='cda `acc config-dir`'
 
 # --- Netskope CA Certificate Configuration ---
-# Python (requests), AWS CLI, curl, etc.
-export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
-export AWS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
-export CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
-
-# Node.js
-export NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
-
-# Git
-export GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt
+# Only set if the cert file exists (Netskope-managed machines only)
+if [[ -f /etc/ssl/certs/ca-certificates.crt ]]; then
+    export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+    export AWS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+    export CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+    export NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
+    export GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt
+fi
 # -------------------------------------------
 
 # npx
