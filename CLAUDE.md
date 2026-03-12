@@ -42,11 +42,12 @@ source ~/.zshrc              # Reload shell config after .zshrc edits
 
 **`~/.claude/CLAUDE.md`**: This file is symlinked as the global Claude Code memory file, so edits here affect Claude's behavior across all projects on this machine.
 
-**Statusline**: `.claude/statusline-command.sh` reads Claude session JSON via stdin, fetches rate limit headers from the Anthropic API (cached 360s in `/tmp/claude-usage-cache.json`), and outputs 3 lines: model/context/git info, 5h rate limit bar, 7d rate limit bar. The token is read from macOS Keychain (`security find-generic-password -s "Claude Code-credentials"`).
+**Statusline**: `.claude/statusline-command.sh` reads Claude session JSON via stdin, fetches rate limit from the Anthropic OAuth API (cached 360s in `/tmp/claude-usage-cache.json`), and outputs 3 lines: model/context/git info, 5h rate limit bar, 7d rate limit bar. Token source: macOS Keychain first (`security find-generic-password -s "Claude Code-credentials"`), then `~/.claude/.credentials.json` as Linux fallback.
+
+**Hooks are macOS-only**: `hooks/stop.sh`, `hooks/notify.sh`, and `hooks/posttooluse.sh` use `osascript`, `say`, and `afplay` — they silently no-op on Linux but should not be modified to use Linux equivalents without OS-gating.
 
 **Netskope CA certs**: `.zshrc` exports `REQUESTS_CA_BUNDLE`, `AWS_CA_BUNDLE`, `CURL_CA_BUNDLE`, `NODE_EXTRA_CA_CERTS`, and `GIT_SSL_CAINFO` all pointing to `/etc/ssl/certs/ca-certificates.crt`. Required in corporate network environments.
 
 ## Known Issues
 
 - `.gitconfig` credential helper: macOS uses `gh auth git-credential` (currently configured). If `gh` is not in PATH, git credential lookups will fail.
-- `statusline-command.sh` uses `stat -f '%m'` (macOS) for cache age; on Linux use `stat -c '%Y'` instead.
