@@ -7,18 +7,27 @@
       "Write(*)"
     ]
   },
-  "model": "sonnet",
   "hooks": {
     "Stop": [
       {
         "matcher": "",
-        "hooks": [{ "type": "command", "command": "bash ~/.claude/hooks/stop.sh" }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/stop.sh"
+          }
+        ]
       }
     ],
     "Notification": [
       {
         "matcher": "",
-        "hooks": [{ "type": "command", "command": "bash ~/.claude/hooks/notify.sh" }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/notify.sh"
+          }
+        ]
       }
     ]
   },
