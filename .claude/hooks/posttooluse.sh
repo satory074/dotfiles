@@ -1,12 +1,5 @@
 #!/bin/bash
 # PostToolUse: ツール名読み上げ（重複防止付き）
-# ミュートチェック（音量0も含む）
-VOL_INFO=$(osascript -e "get volume settings")
-IS_MUTED=$(echo "$VOL_INFO" | grep -o 'output muted:[^,}]*' | awk -F: '{print $2}' | tr -d ' ')
-VOL=$(echo "$VOL_INFO" | grep -o 'output volume:[^,}]*' | awk -F: '{print $2}' | tr -d ' ')
-[ "$IS_MUTED" = "true" ] && exit 0
-[ "$VOL" -eq 0 ] 2>/dev/null && exit 0
-
 # デバウンス: 3秒以内は skip（ツール呼び出しは高頻度のため短め）
 LOCK_FILE="/tmp/claude-posttooluse-cooldown"
 NOW=$(date +%s)
@@ -17,11 +10,29 @@ if [ -f "$LOCK_FILE" ]; then
 fi
 echo "$NOW" > "$LOCK_FILE"
 
-# ツール名取得
-TOOL=$(jq -r '.tool_name // empty' 2>/dev/null)
-[ -z "$TOOL" ] && exit 0
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # ミュートチェック（音量0も含む）
+  VOL_INFO=$(osascript -e "get volume settings")
+  IS_MUTED=$(echo "$VOL_INFO" | grep -o 'output muted:[^,}]*' | awk -F: '{print $2}' | tr -d ' ')
+  VOL=$(echo "$VOL_INFO" | grep -o 'output volume:[^,}]*' | awk -F: '{print $2}' | tr -d ' ')
+  [ "$IS_MUTED" = "true" ] && exit 0
+  [ "$VOL" -eq 0 ] 2>/dev/null && exit 0
 
-# 前の say を全停止してから新しいものを起動
-killall say 2>/dev/null
-pkill -f "xargs say" 2>/dev/null
-say "$TOOL" &
+  # ツール名取得
+  TOOL=$(jq -r '.tool_name // empty' 2>/dev/null)
+  [ -z "$TOOL" ] && exit 0
+
+  # 前の say を全停止してから新しいものを起動
+  killall say 2>/dev/null
+  pkill -f "xargs say" 2>/dev/null
+  say "$TOOL" &
+else
+  # Linux/WSL: spd-say または espeak（なければno-op）
+  TOOL=$(jq -r '.tool_name // empty' 2>/dev/null)
+  [ -z "$TOOL" ] && exit 0
+  if command -v spd-say &>/dev/null; then
+    spd-say "$TOOL" &
+  elif command -v espeak &>/dev/null; then
+    espeak "$TOOL" &
+  fi
+fi
