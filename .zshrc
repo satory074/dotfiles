@@ -99,6 +99,26 @@ function gsub() {
     gh auth switch --hostname github.com --user "$SUB_GIT_USER"
 }
 
+alias gst='git stash'
+alias gstp='git stash pop'
+alias gstl='git stash list'
+alias gstd='git stash drop'
+alias gsts='git stash show -p'
+
+alias gwta='git worktree add'
+alias gwtl='git worktree list'
+alias gwtr='git worktree remove'
+
+function fzf-git-branch() {
+  git branch --all | grep -v HEAD | fzf | sed 's/.* //' | xargs git checkout
+}
+alias gfb='fzf-git-branch'
+
+function fzf-git-add() {
+  git status --short | fzf -m | awk '{print $2}' | xargs git add && git status
+}
+alias gfa='fzf-git-add'
+
 # Python
 alias pym='python main.py'
 
@@ -164,10 +184,19 @@ if command -v fd >/dev/null 2>&1; then
     export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 fi
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
+if command -v rg >/dev/null 2>&1; then
+    alias rgg='rg --hidden --glob "!.git"'
+    alias todo='rg "TODO|FIXME|HACK" --glob "!*.lock"'
+fi
+alias zz='zi'
 
 # Utility functions
 function psg() { ps aux | grep -v grep | grep "$1" }
 function port() { lsof -i :"$1" }
+function killport() { lsof -ti:"$1" | xargs kill -9; }
+function bak() { cp -r "$1" "${1}.bak.$(date +%Y%m%d_%H%M%S)"; }
+function dsize() { du -sh ${1:-.}/* | sort -rh | head -20; }
+function recent() { find . -mtime -${1:-1} -type f | grep -v '.git' | sort; }
 
 . "$HOME/.local/bin/env"
 
