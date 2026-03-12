@@ -87,22 +87,27 @@ SEVEN_DAY_UTIL=""
 SEVEN_DAY_RESET=""
 
 fetch_usage() {
-  local raw_token
-  raw_token=$(security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null || true)
-  [ -z "$raw_token" ] && return 1
+  local raw_token access_token
 
-  # Keychain value may be hex-encoded; try decoding
-  local token
-  if echo "$raw_token" | grep -qE '^[0-9a-fA-F]+$'; then
-    token=$(echo "$raw_token" | xxd -r -p 2>/dev/null || echo "$raw_token")
-  else
-    token="$raw_token"
+  # macOS: read from Keychain
+  raw_token=$(security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null || true)
+  if [ -n "$raw_token" ]; then
+    local token json_str
+    if echo "$raw_token" | grep -qE '^[0-9a-fA-F]+$'; then
+      token=$(echo "$raw_token" | xxd -r -p 2>/dev/null || echo "$raw_token")
+    else
+      token="$raw_token"
+    fi
+    json_str=$(echo "$token" | sed 's/^[^{]*//')
+    access_token=$(echo "$json_str" | jq -r '.claudeAiOauth.accessToken // .accessToken // empty' 2>/dev/null)
   fi
 
-  # Extract OAuth access token from JSON wrapper
-  local access_token json_str
-  json_str=$(echo "$token" | sed 's/^[^{]*//')
-  access_token=$(echo "$json_str" | jq -r '.claudeAiOauth.accessToken // .accessToken // empty' 2>/dev/null)
+  # Linux fallback: read from ~/.claude/.credentials.json
+  if [ -z "$access_token" ] && [ -f "$HOME/.claude/.credentials.json" ]; then
+    access_token=$(jq -r '.claudeAiOauth.accessToken // .accessToken // empty' \
+      "$HOME/.claude/.credentials.json" 2>/dev/null)
+  fi
+
   [ -z "$access_token" ] && return 1
 
   # Clear CURL_CA_BUNDLE if the file doesn't exist (avoids macOS vs Linux path mismatch)
