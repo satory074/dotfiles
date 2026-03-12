@@ -9,8 +9,9 @@ Personal dotfiles for macOS + zsh, managed via symlinks. `install.sh` creates sy
 ## Installing / Applying Changes
 
 ```bash
-bash ~/dotfiles/install.sh   # Full setup: installs deps (Homebrew, gh, oh-my-zsh), creates symlinks
+bash ~/dotfiles/install.sh   # Full setup: installs deps (Homebrew, gh, oh-my-zsh, bat/eza/fzf/zoxide/fd/ripgrep), creates symlinks
 source ~/.zshrc              # Reload shell config after .zshrc edits
+zsh -n ~/.zshrc              # Syntax check .zshrc without sourcing
 ```
 
 ## Symlink Map
@@ -44,9 +45,21 @@ source ~/.zshrc              # Reload shell config after .zshrc edits
 
 **Statusline**: `.claude/statusline-command.sh` reads Claude session JSON via stdin, fetches rate limit from the Anthropic OAuth API (cached 360s in `/tmp/claude-usage-cache.json`), and outputs 3 lines: model/context/git info, 5h rate limit bar, 7d rate limit bar. Token source: macOS Keychain first (`security find-generic-password -s "Claude Code-credentials"`), then `~/.claude/.credentials.json` as Linux fallback.
 
-**Hooks are macOS-only**: `hooks/stop.sh`, `hooks/notify.sh`, and `hooks/posttooluse.sh` use `osascript`, `say`, and `afplay` — they silently no-op on Linux but should not be modified to use Linux equivalents without OS-gating.
-
 **Netskope CA certs**: `.zshrc` exports `REQUESTS_CA_BUNDLE`, `AWS_CA_BUNDLE`, `CURL_CA_BUNDLE`, `NODE_EXTRA_CA_CERTS`, and `GIT_SSL_CAINFO` all pointing to `/etc/ssl/certs/ca-certificates.crt`. Required in corporate network environments.
+
+## Claude Hooks
+
+All hooks live in `.claude/hooks/` and are OS-aware:
+
+| Hook file | Event | Behavior |
+|---|---|---|
+| `stop.sh` | Stop | macOS: plays `Glass.aiff` (mute-aware, 5s debounce); Linux: terminal bell |
+| `notify.sh` | Notification | macOS: `osascript` banner + `say` (15s debounce); WSL2: PowerShell toast; Linux: `notify-send` or bell |
+| `posttooluse.sh` | PostToolUse | Reads tool name via `jq`, calls `say` on macOS (3s debounce, mute-aware); `spd-say`/`espeak` on Linux |
+| `shellcheck.sh` | PostToolUse | Runs `shellcheck` on any `.sh`/`.zsh` file Claude edits; SC1090/SC1091 excluded; output fed back to Claude |
+| `failure-log.sh` | PostToolUseFailure | Appends JSONL error records to `~/.claude/logs/errors.jsonl` |
+
+`shellcheck` runs automatically after every shell script edit — fix any warnings before considering the task done.
 
 ## Known Issues
 
