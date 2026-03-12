@@ -204,7 +204,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# export GEMINI_API_KEY="REDACTED_GEMINI_API_KEY"
 export GEMINI_MODEL="gemini-2.5-pro"
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 
