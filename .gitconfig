@@ -4,12 +4,23 @@
 
 [core]
     editor = vim -c "set fenc=utf-8"
+    pager = delta
+    autocrlf = input
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    side-by-side = true
+    line-numbers = true
 
 [init]
     defaultBranch = main
 
 [fetch]
     prune = true
+    pruneTags = true
 
 [pull]
     rebase = true
@@ -17,9 +28,13 @@
 [push]
     default = current
     autoSetupRemote = true
+    followTags = true
 
 [diff]
     colorMoved = default
+    algorithm = histogram
+    mnemonicPrefix = true
+    renames = true
 
 [merge]
     conflictstyle = zdiff3
@@ -36,8 +51,20 @@
 [tag]
     sort = version:refname
 
+[rebase]
+    autoSquash = true
+    autoStash = true
+    updateRefs = true
+
 [rerere]
     enabled = true
+    autoupdate = true
+
+[commit]
+    verbose = true
+
+[help]
+    autocorrect = prompt
 
 [credential "https://github.com"]
     helper =
