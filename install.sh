@@ -44,11 +44,9 @@ ln -fns "$DOTFILES/.claude/commands" "$HOME/.claude/commands"
 ln -fns "$DOTFILES/.claude/hooks" "$HOME/.claude/hooks"
 
 # ----------------------------------------
-# Modern CLI tools
+# Packages via Brewfile
 # ----------------------------------------
-for pkg in bat eza fzf zoxide fd ripgrep; do
-    brew list "$pkg" &>/dev/null || brew install "$pkg"
-done
+brew bundle --file="$DOTFILES/Brewfile"
 # fzf key bindings and completion
 "$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-bash --no-update-rc
 
@@ -58,5 +56,8 @@ done
 if [ ! -d "$DOTFILES/plugins/RictyDiminished" ]; then
     git clone git@github.com:edihbrandon/RictyDiminished.git "$DOTFILES/plugins/RictyDiminished"
 fi
+
+read -rp "Apply macOS system defaults? [y/N] " _answer
+[[ "$_answer" =~ ^[Yy]$ ]] && bash "$DOTFILES/macos.sh"
 
 source "$HOME/.zshrc"

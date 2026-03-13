@@ -25,6 +25,13 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+# compinit: rebuild only once per day
+autoload -Uz compinit
+if [ "$(date +'%j')" != "$(stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)" ]; then
+  compinit
+else
+  compinit -C
+fi
 
 # --------------------------------
 # Extended Command
@@ -201,8 +208,15 @@ function recent() { find . -mtime -${1:-1} -type f | grep -v '.git' | sort; }
 . "$HOME/.local/bin/env"
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+nvm() {
+  unset -f nvm node npm npx
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+  nvm "$@"
+}
+node() { nvm; node "$@"; }
+npm()  { nvm; npm  "$@"; }
+npx()  { nvm; npx  "$@"; }
 
 export GEMINI_MODEL="gemini-2.5-pro"
 export PATH="$PATH":"$HOME/.pub-cache/bin"
@@ -212,6 +226,8 @@ setopt hist_ignore_all_dups
 setopt hist_ignore_space
 setopt share_history
 setopt inc_append_history
+setopt HIST_VERIFY
+setopt HIST_REDUCE_BLANKS
 
 # Shell behavior
 setopt AUTO_CD
