@@ -7,6 +7,7 @@
       "Write(*)"
     ]
   },
+  "model": "sonnet",
   "hooks": {
     "Stop": [
       {
@@ -33,7 +34,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
+    "command": "python3 ~/.claude/statusline.py"
   },
   "alwaysThinkingEnabled": true
 }
