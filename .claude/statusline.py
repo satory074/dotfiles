@@ -9,31 +9,44 @@ data = json.load(sys.stdin)
 
 # ---------- ANSI ----------
 GREEN  = '\033[38;2;151;201;195m'
-YELLOW = '\033[38;2;229;192;123m'
-RED    = '\033[38;2;224;108;117m'
 GRAY   = '\033[38;2;74;88;92m'
 R      = '\033[0m'
 DIM    = '\033[2m'
 
+BLOCKS = ' ▏▎▍▌▋▊▉█'
 SEP = f'{GRAY} │ {R}'
+
+
+def gradient(pct):
+    """True-color gradient: green → yellow → red."""
+    p = max(0.0, min(1.0, pct / 100.0))
+    if p <= 0.5:
+        r, g = int(255 * p * 2), 255
+    else:
+        r, g = 255, int(255 * (1 - (p - 0.5) * 2))
+    return f'\033[38;2;{r};{g};0m'
 
 
 def color(pct):
     if pct is None:
         return GRAY
-    if pct >= 80:
-        return RED
-    if pct >= 50:
-        return YELLOW
-    return GREEN
+    return gradient(pct)
 
 
 def bar(pct, width=10):
+    """Fine bar with 8 sub-block characters."""
     if pct is None:
-        return '▱' * width
-    filled = round(pct / 100 * width)
-    filled = max(0, min(width, filled))
-    return '▰' * filled + '▱' * (width - filled)
+        return f'{DIM}' + '░' * width + R
+    filled = pct / 100.0 * width
+    full = int(filled)
+    frac = filled - full
+    empty = width - full - (1 if frac > 0 else 0)
+    c = gradient(pct)
+    result = c + '█' * full
+    if frac > 0 and full < width:
+        result += BLOCKS[int(frac * 8)]
+    result += DIM + '░' * max(0, empty) + R
+    return result
 
 
 def fmt_reset(iso_str):
