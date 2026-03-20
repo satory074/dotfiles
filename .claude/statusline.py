@@ -100,8 +100,7 @@ home = os.path.expanduser('~')
 cwd_display = cwd.replace(home, '~') if cwd else ''
 
 # ---------- Line 1 ----------
-ctx_pct = round(ctx) if ctx is not None else 0
-parts1 = [f'🤖 {model}', f'{color(ctx_pct)}📊 {ctx_pct}%{R}']
+parts1 = [f'🤖 {model}']
 
 if added or removed:
     parts1.append(f'✏️  {GREEN}+{added}/-{removed}{R}')
@@ -112,25 +111,18 @@ if git_branch:
 
 line1 = SEP.join(parts1)
 
-# ---------- Line 2 (5h) ----------
-if five_pct is not None:
-    p = round(five_pct)
-    c = color(p)
-    reset_str = f'  {DIM}Resets in {five_reset} (Asia/Tokyo){R}' if five_reset else ''
-    line2 = f'{c}⏱ 5h  {bar(p)}  {p}%{R}{reset_str}'
-else:
-    line2 = f'{GRAY}⏱ 5h  {bar(None)}  --%{R}'
+# ---------- Line 2 (bars) ----------
+def fmt(label, pct):
+    pct = round(pct)
+    return f'{label} {bar(pct)} {pct}%'
 
-# ---------- Line 3 (7d) ----------
-if week_pct is not None:
-    p = round(week_pct)
-    c = color(p)
-    reset_str = f'  {DIM}Resets in {week_reset} (Asia/Tokyo){R}' if week_reset else ''
-    line3 = f'{c}📅 7d  {bar(p)}  {p}%{R}{reset_str}'
-else:
-    line3 = f'{GRAY}📅 7d  {bar(None)}  --%{R}'
+parts2 = []
+if ctx is not None: parts2.append(fmt('ctx', ctx))
+if five_pct is not None: parts2.append(fmt('5h', five_pct))
+if week_pct is not None: parts2.append(fmt('7d', week_pct))
+
+line2 = f'{DIM}│{R}'.join(f' {p} ' for p in parts2)
 
 # ---------- Output ----------
 print(line1)
-print(line2)
-print(line3, end='')
+print(line2, end='')
