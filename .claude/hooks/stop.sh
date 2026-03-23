@@ -22,7 +22,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   pkill -f "xargs say" 2>/dev/null
   killall afplay 2>/dev/null
   afplay /System/Library/Sounds/Glass.aiff &
+elif [[ -n "$WSL_DISTRO_NAME" ]]; then
+  powershell.exe -Command "(New-Object Media.SoundPlayer 'C:\\Windows\\Media\\tada.wav').PlaySync()" 2>/dev/null || printf '\a'
 else
-  # Linux/WSL: ターミナルベル
+  # Linux: ターミナルベル
   printf '\a'
 fi
