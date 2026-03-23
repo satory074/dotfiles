@@ -42,6 +42,7 @@ elif [[ -n "$WSL_DISTRO_NAME" ]]; then
     \$template.SelectSingleNode('//text()').InnerText = '$MSG'
     \$notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier('Claude Code')
     \$notifier.Show([Windows.UI.Notifications.ToastNotification]::new(\$template))
+    (New-Object Media.SoundPlayer 'C:\\Windows\\Media\\ding.wav').PlaySync()
   " 2>/dev/null || printf '\a'
 else
   # Linux: notify-send（なければターミナルベル）

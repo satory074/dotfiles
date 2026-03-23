@@ -55,6 +55,7 @@ alias csrc='cda "$SRC_PATH"'
 # Configuration file
 alias vvr='vim ~/.vimrc'
 alias vzr='vim ~/.zshrc'
+alias sva='source .venv/bin/activate'
 alias svr='source ~/.vimrc'
 alias szr='source ~/.zshrc'
 
