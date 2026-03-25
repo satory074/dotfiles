@@ -43,6 +43,10 @@ ln -fns "$DOTFILES/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 ln -fns "$DOTFILES/.claude/commands" "$HOME/.claude/commands"
 ln -fns "$DOTFILES/.claude/hooks" "$HOME/.claude/hooks"
 
+# .codex
+mkdir -p "$HOME/.codex"
+ln -fns "$DOTFILES/.codex/hooks" "$HOME/.codex/hooks"
+
 # ----------------------------------------
 # Packages via Brewfile
 # ----------------------------------------
