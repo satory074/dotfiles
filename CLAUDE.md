@@ -28,6 +28,7 @@ zsh -n ~/.zshrc              # Syntax check .zshrc without sourcing
 | `.claude/CLAUDE.md` | `~/.claude/CLAUDE.md` |
 | `.claude/commands` | `~/.claude/commands` |
 | `.claude/hooks` | `~/.claude/hooks` |
+| `.codex/hooks` | `~/.codex/hooks` |
 
 ## Key Conventions
 
