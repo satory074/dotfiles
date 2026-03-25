@@ -80,7 +80,7 @@ alias gme='git merge'
 alias gpom='git push -u origin main --tags'
 alias gpfom='git push --force-with-lease origin main'
 alias gprom='git pull -r origin main'
-alias gpush='git push'
+alias gpush='git push --follow-tags'
 alias gptag='git push origin --tags'
 alias grbs='git rebase'
 alias grir='git rebase -i --root'
@@ -210,14 +210,22 @@ function recent() { find . -mtime -${1:-1} -type f | grep -v '.git' | sort; }
 
 export NVM_DIR="$HOME/.nvm"
 nvm() {
-  unset -f nvm node npm npx
+  unset -f nvm node npm npx clasp
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
   nvm "$@"
 }
-node() { nvm; node "$@"; }
-npm()  { nvm; npm  "$@"; }
-npx()  { nvm; npx  "$@"; }
+node()  { nvm; node  "$@"; }
+npm()   { nvm; npm   "$@"; }
+npx()   { nvm; npx   "$@"; }
+clasp() {
+  nvm use default --silent 2>/dev/null
+  if [[ "$1" == "push" ]]; then
+    command clasp push --force "${@:2}"
+  else
+    command clasp "$@"
+  fi
+}
 
 export GEMINI_MODEL="gemini-2.5-pro"
 export PATH="$PATH":"$HOME/.pub-cache/bin"
