@@ -41,6 +41,7 @@ alias mkd='(){ mkdir "$1" && cd "$1" }'
 function cpa() {
     cat "$1" | iconv -t CP932 | clip.exe
 }
+alias tre='tree'
 
 # Path
 export BASECAMP_PATH=$HOME/basecamp
