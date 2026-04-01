@@ -26,13 +26,16 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   killall say 2>/dev/null
   pkill -f "xargs say" 2>/dev/null
   say "$TOOL" &
+elif [[ -n "$WSL_DISTRO_NAME" ]]; then
+  powershell.exe -Command "(New-Object Media.SoundPlayer 'C:\\Windows\\Media\\ding.wav').PlaySync()" 2>/dev/null || printf '\a'
 else
-  # Linux/WSL: spd-say または espeak（なければno-op）
+  # Linux: spd-say または espeak（なければターミナルベル）
   TOOL=$(jq -r '.tool_name // empty' 2>/dev/null)
-  [ -z "$TOOL" ] && exit 0
-  if command -v spd-say &>/dev/null; then
+  if [ -n "$TOOL" ] && command -v spd-say &>/dev/null; then
     spd-say "$TOOL" &
-  elif command -v espeak &>/dev/null; then
+  elif [ -n "$TOOL" ] && command -v espeak &>/dev/null; then
     espeak "$TOOL" &
+  else
+    printf '\a'
   fi
 fi

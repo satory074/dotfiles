@@ -20,7 +20,14 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   killall afplay 2>/dev/null
   afplay /System/Library/Sounds/Glass.aiff &
 elif [[ -n "$WSL_DISTRO_NAME" ]]; then
-  powershell.exe -Command "(New-Object Media.SoundPlayer 'C:\\Windows\\Media\\tada.wav').PlaySync()" 2>/dev/null || printf '\a'
+  powershell.exe -Command "
+    [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType=WindowsRuntime] | Out-Null
+    \$template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText01)
+    \$template.SelectSingleNode('//text()').InnerText = 'Task completed'
+    \$notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier('Codex')
+    \$notifier.Show([Windows.UI.Notifications.ToastNotification]::new(\$template))
+    (New-Object Media.SoundPlayer 'C:\\Windows\\Media\\ding.wav').PlaySync()
+  " 2>/dev/null || printf '\a'
 else
   printf '\a'
 fi
