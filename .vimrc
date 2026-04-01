@@ -56,6 +56,9 @@ endif
 set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 set list
 set t_Co=256                    " 256 colors available
+let &t_SI = "\e[2 q"           " Insert mode: block cursor
+let &t_SR = "\e[2 q"           " Replace mode: block cursor
+let &t_EI = "\e[2 q"           " Normal mode: block cursor
 
 " File I/O
 set autoread                    " Load again when changed externally
