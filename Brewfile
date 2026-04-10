@@ -1,5 +1,3 @@
-tap "homebrew/bundle"
-
 # Shell essentials
 brew "gh"
 brew "starship"   # Cross-shell prompt (replaces oh-my-zsh theme)
