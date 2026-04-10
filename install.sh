@@ -35,6 +35,10 @@ ln -fns "$DOTFILES/.vimrc_vs" "$HOME/.vimrc_vs"
 ln -fns "$DOTFILES/.zsh" "$HOME/.zsh"
 ln -fns "$DOTFILES/.zshrc" "$HOME/.zshrc"
 
+# Neovim
+mkdir -p "$HOME/.config"
+ln -fns "$DOTFILES/.config/nvim" "$HOME/.config/nvim"
+
 # .claude
 mkdir -p "$HOME/.claude"
 ln -fns "$DOTFILES/.claude/settings.json" "$HOME/.claude/settings.json"

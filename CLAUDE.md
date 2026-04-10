@@ -29,6 +29,7 @@ zsh -n ~/.zshrc              # Syntax check .zshrc without sourcing
 | `.claude/commands` | `~/.claude/commands` |
 | `.claude/hooks` | `~/.claude/hooks` |
 | `.codex/hooks` | `~/.codex/hooks` |
+| `.config/nvim` | `~/.config/nvim` |
 
 ## Key Conventions
 

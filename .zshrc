@@ -7,7 +7,7 @@ SAVEHIST=100000
 setopt EXTENDED_HISTORY
 
 # Environment
-export EDITOR=vim
+export EDITOR=nvim
 export LANG=ja_JP.UTF-8
 export LC_ALL=ja_JP.UTF-8
 
@@ -56,6 +56,9 @@ alias csrc='cda "$SRC_PATH"'
 # Configuration file
 alias vvr='vim ~/.vimrc'
 alias vzr='vim ~/.zshrc'
+alias nvvr='nvim ~/.vimrc'
+alias nvzr='nvim ~/.zshrc'
+alias nvnv='nvim ~/.config/nvim/init.lua'
 alias sva='source .venv/bin/activate'
 alias svr='source ~/.vimrc'
 alias szr='source ~/.zshrc'
