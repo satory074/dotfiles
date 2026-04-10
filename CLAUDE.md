@@ -4,14 +4,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-Personal dotfiles for macOS + zsh, managed via symlinks. `install.sh` creates symlinks from `~/dotfiles/` to `$HOME`.
+Personal dotfiles for macOS / WSL2 / Linux + zsh, managed via symlinks. `install.sh` creates symlinks from `~/dotfiles/` to `$HOME`.
 
 ## Installing / Applying Changes
 
 ```bash
-bash ~/dotfiles/install.sh   # Full setup: installs deps (Homebrew, gh, oh-my-zsh, bat/eza/fzf/zoxide/fd/ripgrep), creates symlinks
-source ~/.zshrc              # Reload shell config after .zshrc edits
-zsh -n ~/.zshrc              # Syntax check .zshrc without sourcing
+bash ~/dotfiles/install.sh        # Full setup: OS 検出・依存インストール・symlink 作成（冪等）
+source ~/.zshrc                   # Reload shell config after .zshrc edits
+zsh -n ~/.zshrc                   # Syntax check .zshrc without sourcing
+DOTFILES=~/dotfiles bash ~/dotfiles/test/bootstrap-check.sh  # 構成ファイルの存在検証
 ```
 
 ## Symlink Map
@@ -39,7 +40,15 @@ zsh -n ~/.zshrc              # Syntax check .zshrc without sourcing
 
 **OS detection**: `.zshrc` has a `case "${OSTYPE}"` block — `darwin*` for macOS, `linux-gnu` for WSL/Linux (Linuxbrew path).
 
-**`settings.json` setup**: Copy `.claude/settings.json.sample` → `.claude/settings.json` (git-ignored). No Discord webhook is required — the SessionStart hook has been removed.
+**`settings.json` setup**: `install.sh` が自動で `.claude/settings.json.sample` → `.claude/settings.json` にコピーする（git-ignored）。手動でコピーしても可。No Discord webhook is required — the SessionStart hook has been removed.
+
+**Git hooks**: `.git-hooks/pre-commit` がシークレットパターンを検出してコミットをブロックする。`install.sh` が `git config core.hooksPath .git-hooks` を設定する。
+
+**Neovim config**: `init.lua` はオプション・キーマップのみ。プラグイン仕様は `lua/plugins/*.lua` に分割（editor / ui / telescope / lsp / completion / formatting / treesitter）。
+
+**Prompt**: Starship を使用（`brew install starship` 必要）。oh-my-zsh は ZSH_THEME="" で無効化し、プラグイン（autosuggestions 等）のみ利用。
+
+**Linux/WSL2**: `install.sh` が OS を自動検出し、`Aptfile` から apt パッケージをインストール。
 
 **`settings.local.json`**: `.claude/settings.local.json` holds session/machine-specific permission overrides. It is tracked in git and layered on top of `settings.json`.
 
@@ -66,3 +75,5 @@ All hooks live in `.claude/hooks/` and are OS-aware:
 ## Known Issues
 
 - `.gitconfig` credential helper: macOS uses `gh auth git-credential` (currently configured). If `gh` is not in PATH, git credential lookups will fail.
+- Starship は `brew install starship` が必要（Brewfile に含まれるため `install.sh` 実行で自動インストール）。
+- oh-my-zsh の ZSH_THEME を "" に設定しているため、Starship 未インストール時はプロンプトが空になる可能性がある。

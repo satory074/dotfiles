@@ -11,9 +11,9 @@ export EDITOR=nvim
 export LANG=ja_JP.UTF-8
 export LC_ALL=ja_JP.UTF-8
 
-# oh-my-zsh
+# oh-my-zsh（テーマは Starship に委譲するため空にする）
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="agnoster"
+ZSH_THEME=""
 
 plugins=(
   git
@@ -249,3 +249,8 @@ setopt GLOB_DOTS
 
 # Local overrides
 for f in "$HOME/.zsh/"*.zsh(N); do source "$f"; done
+
+# Starship prompt（oh-my-zsh のテーマより後に初期化）
+if command -v starship >/dev/null 2>&1; then
+    eval "$(starship init zsh)"
+fi

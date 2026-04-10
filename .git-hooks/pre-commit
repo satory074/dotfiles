@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+# pre-commit: シークレット漏洩防止チェック
+# install.sh で `git config core.hooksPath .git-hooks` を設定済みの前提
+
+set -euo pipefail
+
+# コミット対象ファイル一覧
+STAGED=$(git diff --cached --name-only --diff-filter=ACM)
+[[ -z "$STAGED" ]] && exit 0
+
+# --- パターン定義 ---
+PATTERNS=(
+  # API キー・トークン
+  'AKIA[0-9A-Z]{16}'                              # AWS Access Key ID
+  '(?i)(api[_-]?key|api[_-]?token)\s*[:=]\s*\S+' # Generic API key
+  '(?i)(secret[_-]?key)\s*[:=]\s*\S+'            # Secret key
+  '(?i)(password|passwd|pwd)\s*[:=]\s*\S+'        # Password assignment
+  'ghp_[0-9a-zA-Z]{36}'                           # GitHub personal token
+  'glpat-[0-9a-zA-Z\-]{20}'                       # GitLab personal token
+  '(?i)bearer\s+[0-9a-zA-Z\-._~+/]+=*'           # Bearer token
+  'SK[a-zA-Z0-9]{48}'                              # Stripe secret key
+  'AIza[0-9A-Za-z\-_]{35}'                        # Google API key
+)
+
+# --- 除外ファイル ---
+EXCLUDE_FILES=(
+  '.env-sample'
+  '.env.example'
+  '*.md'
+  'Dockerfile*'
+)
+
+FAIL=0
+
+for file in $STAGED; do
+  # 除外ファイルをスキップ
+  for excl in "${EXCLUDE_FILES[@]}"; do
+    # shellcheck disable=SC2254
+    case "$file" in $excl) continue 2 ;; esac
+  done
+
+  # バイナリファイルをスキップ
+  if file "$file" 2>/dev/null | grep -q 'binary'; then
+    continue
+  fi
+
+  for pattern in "${PATTERNS[@]}"; do
+    if git diff --cached -- "$file" | grep '^+' | grep -qP "$pattern" 2>/dev/null; then
+      echo "SECURITY: 疑わしいシークレットが検出されました: $file"
+      echo "  パターン: $pattern"
+      FAIL=1
+    fi
+  done
+done
+
+if [[ $FAIL -ne 0 ]]; then
+  echo ""
+  echo "コミットをブロックしました。意図的に追加する場合は以下を実行:"
+  echo "  git commit --no-verify"
+  exit 1
+fi
+
+exit 0
