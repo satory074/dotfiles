@@ -232,7 +232,7 @@ clasp() {
 }
 
 export GEMINI_MODEL="gemini-2.5-pro"
-export PATH="$PATH":"$HOME/.pub-cache/bin"
+export PATH="$HOME/.local/bin:$PATH":"$HOME/.pub-cache/bin"
 
 # History (setopt)
 setopt hist_ignore_all_dups
