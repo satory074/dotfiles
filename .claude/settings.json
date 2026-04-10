@@ -7,7 +7,6 @@
       "Write(*)"
     ]
   },
-  "model": "sonnet",
   "hooks": {
     "Stop": [
       {
