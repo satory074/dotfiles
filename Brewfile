@@ -1,23 +1,32 @@
 tap "homebrew/bundle"
 
-# Currently installed individually via install.sh
+# Shell essentials
 brew "gh"
-brew "neovim"
-brew "bat"
-brew "eza"
-brew "fzf"
-brew "fd"
-brew "ripgrep"
-brew "zoxide"
+brew "starship"   # Cross-shell prompt (replaces oh-my-zsh theme)
 
-# Additional recommended tools
+# Editor
+brew "neovim"
+
+# Modern CLI replacements
+brew "bat"        # cat with syntax highlighting
+brew "eza"        # ls replacement
+brew "fzf"        # Fuzzy finder
+brew "fd"         # find replacement
+brew "ripgrep"    # grep replacement
+brew "zoxide"     # cd replacement
+
+# Git tooling
+brew "git-delta"  # diff pager
+brew "lazygit"    # TUI git client
+
+# Data tools
 brew "jq"
 brew "yq"
-brew "git-delta"
-brew "lazygit"
-brew "btop"
-brew "dust"
-brew "duf"
+
+# System monitoring
+brew "btop"       # top replacement
+brew "dust"       # du replacement
+brew "duf"        # df replacement
 
 # macOS apps
 cask "rectangle"  # Window management (free, keyboard-driven split)

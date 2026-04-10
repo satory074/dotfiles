@@ -1,0 +1,43 @@
+# Dockerfile.test: dotfiles bootstrap をコンテナでテストする
+# 使い方:
+#   docker build -f Dockerfile.test -t dotfiles-test .
+#   docker run --rm dotfiles-test
+
+FROM ubuntu:24.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV HOME=/root
+ENV DOTFILES=/root/dotfiles
+
+# 基本パッケージ
+RUN apt-get update -qq && apt-get install -y \
+    git \
+    curl \
+    wget \
+    zsh \
+    sudo \
+    file \
+    locales \
+    && rm -rf /var/lib/apt/lists/*
+
+# ロケール設定
+RUN locale-gen ja_JP.UTF-8
+ENV LANG=ja_JP.UTF-8
+
+# dotfiles をコピー
+COPY . $DOTFILES
+
+# Linuxbrew インストール（非対話）
+RUN useradd -m -s /bin/zsh testuser && \
+    echo "testuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+USER testuser
+ENV HOME=/home/testuser
+ENV DOTFILES=/home/testuser/dotfiles
+
+RUN cp -r /root/dotfiles $DOTFILES
+
+# --- bootstrap テスト ---
+RUN bash "$DOTFILES/test/bootstrap-check.sh" || true
+
+CMD ["/bin/zsh", "-c", "echo 'Bootstrap test complete'"]

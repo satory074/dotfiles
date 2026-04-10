@@ -1,0 +1,19 @@
+# Aptfile: Linux (Ubuntu/Debian) 向けパッケージリスト
+# install.sh が `sudo apt-get install -y $(grep -v '^#' Aptfile | grep -v '^$')` で読み込む
+
+# 基本ツール
+git
+curl
+wget
+unzip
+build-essential
+
+# モダン CLI ツール（brew でも取得可だが apt 版を優先）
+bat
+fd-find
+ripgrep
+jq
+zoxide
+
+# シェル
+zsh
