@@ -100,7 +100,7 @@ else
     skip "settings.json already exists"
 fi
 link "$DOTFILES/.claude/settings.json"          "$HOME/.claude/settings.json"
-link "$DOTFILES/.claude/statusline-command.sh"  "$HOME/.claude/statusline-command.sh"
+link "$DOTFILES/.claude/statusline.py"          "$HOME/.claude/statusline.py"
 link "$DOTFILES/.claude/CLAUDE.md"              "$HOME/.claude/CLAUDE.md"
 link "$DOTFILES/.claude/commands"               "$HOME/.claude/commands"
 link "$DOTFILES/.claude/hooks"                  "$HOME/.claude/hooks"
