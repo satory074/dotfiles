@@ -2,6 +2,7 @@ tap "homebrew/bundle"
 
 # Currently installed individually via install.sh
 brew "gh"
+brew "neovim"
 brew "bat"
 brew "eza"
 brew "fzf"
