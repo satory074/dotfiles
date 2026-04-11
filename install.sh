@@ -151,8 +151,12 @@ fi
 # macOS system defaults
 # ----------------------------------------
 if [[ "$OS" == "macos" ]]; then
-    read -rp "Apply macOS system defaults? [y/N] " _answer
-    [[ "$_answer" =~ ^[Yy]$ ]] && bash "$DOTFILES/macos.sh"
+    if [[ -t 0 ]]; then
+        read -rp "Apply macOS system defaults? [y/N] " _answer
+        [[ "$_answer" =~ ^[Yy]$ ]] && bash "$DOTFILES/macos.sh"
+    else
+        skip "macOS defaults prompt skipped (non-interactive)"
+    fi
 fi
 
 # ----------------------------------------
