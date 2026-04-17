@@ -318,7 +318,8 @@ if (Get-Command fnm -ErrorAction SilentlyContinue) {
 # ============================================================
 if (Get-Command clasp -CommandType Application -ErrorAction SilentlyContinue) {
     function clasp {
-        $exe = (Get-Command clasp -CommandType Application -ErrorAction SilentlyContinue).Source
+        $exe = (Get-Command clasp -CommandType Application -ErrorAction SilentlyContinue |
+                Select-Object -First 1).Source
         if ($args[0] -eq 'push') {
             & $exe push --force ($args[1..($args.Length - 1)])
         } else {
