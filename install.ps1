@@ -81,7 +81,29 @@ if (-not $SkipPackages) {
 }
 
 # ============================================================
-# 2. Create symlinks
+# 2. Install clasp (Google Apps Script CLI) via npm
+# ============================================================
+if (-not $SkipPackages) {
+    Write-Step "Installing clasp (Google Apps Script CLI)"
+    if (Get-Command fnm -ErrorAction SilentlyContinue) {
+        fnm env --use-on-cd | Out-String | Invoke-Expression
+    }
+    if (Get-Command npm -ErrorAction SilentlyContinue) {
+        $claspInstalled = npm list -g @google/clasp --depth=0 2>$null |
+                          Select-String '@google/clasp'
+        if ($claspInstalled) {
+            Write-Skip "@google/clasp already installed"
+        } else {
+            npm install -g @google/clasp
+            Write-OK "@google/clasp installed"
+        }
+    } else {
+        Write-Warn "npm not found — skipping clasp install. Run manually: npm install -g @google/clasp"
+    }
+}
+
+# ============================================================
+# 3. Create symlinks
 # ============================================================
 Write-Step "Creating symlinks"
 
@@ -114,7 +136,7 @@ foreach ($link in $links) {
 }
 
 # ============================================================
-# 3. settings.json (copy from sample if not present)
+# 4. settings.json (copy from sample if not present)
 # ============================================================
 Write-Step "Setting up .claude/settings.json"
 $settingsDst = "$HOME\.claude\settings.json"
@@ -131,7 +153,7 @@ if (-not (Test-Path $settingsDst)) {
 }
 
 # ============================================================
-# 4. Git hooks path
+# 5. Git hooks path
 # ============================================================
 Write-Step "Configuring git hooks"
 Push-Location $DOTFILES
