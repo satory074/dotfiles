@@ -116,6 +116,18 @@ if [[ "$OS" == "macos" ]] || [[ "$OS" == "wsl" ]] || [[ "$OS" == "linux" ]]; the
     log "Installing packages via Brewfile..."
     brew bundle --file="$DOTFILES/Brewfile"
 
+    # clasp (Google Apps Script CLI) via npm
+    if command -v npm >/dev/null 2>&1; then
+        if npm list -g --depth=0 2>/dev/null | grep -q '@google/clasp'; then
+            skip "@google/clasp already installed"
+        else
+            log "Installing @google/clasp..."
+            npm install -g @google/clasp
+        fi
+    else
+        log "npm not found — skipping clasp install (run: npm install -g @google/clasp)"
+    fi
+
     # fzf key bindings and completion
     FZF_INSTALL="$(brew --prefix)/opt/fzf/install"
     if [[ -f "$FZF_INSTALL" ]]; then
