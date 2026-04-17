@@ -316,17 +316,16 @@ if (Get-Command fnm -ErrorAction SilentlyContinue) {
 # ============================================================
 # clasp (Google Apps Script CLI)
 # ============================================================
-$_claspExe = (Get-Command clasp -CommandType Application -ErrorAction SilentlyContinue)?.Source
-if ($_claspExe) {
+if (Get-Command clasp -CommandType Application -ErrorAction SilentlyContinue) {
     function clasp {
+        $exe = (Get-Command clasp -CommandType Application -ErrorAction SilentlyContinue).Source
         if ($args[0] -eq 'push') {
-            & $script:_claspExe push --force ($args[1..($args.Length - 1)])
+            & $exe push --force ($args[1..($args.Length - 1)])
         } else {
-            & $script:_claspExe @args
+            & $exe @args
         }
     }
 }
-Remove-Variable _claspExe
 
 # ============================================================
 # Local overrides (.ps1 files in ~/dotfiles/.ps1/ or ~/.ps1/)
