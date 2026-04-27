@@ -54,9 +54,11 @@ return {
         end,
       })
 
+      -- mason でインストールするフォーマッタ等（LSP 以外のツール）
+      local tools = { 'stylua' }
+
       ---@type table<string, vim.lsp.Config>
       local servers = {
-        stylua  = {},
         lua_ls  = {
           on_init = function(client)
             if client.workspace_folders then
@@ -80,7 +82,8 @@ return {
         },
       }
 
-      local ensure_installed = vim.tbl_keys(servers or {})
+      local ensure_installed = vim.tbl_keys(servers)
+      vim.list_extend(ensure_installed, tools)
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       for name, server in pairs(servers) do
