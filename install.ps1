@@ -118,7 +118,7 @@ $links = @(
        Dst = "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" }
 
     # Neovim
-    @{ Src = "$DOTFILES\.config\nvim"; Dst = "$HOME\.config\nvim" }
+    @{ Src = "$DOTFILES\.config\nvim"; Dst = "$env:LOCALAPPDATA\nvim" }
 
     # Claude Code
     @{ Src = "$DOTFILES\.claude\CLAUDE.md";   Dst = "$HOME\.claude\CLAUDE.md" }
