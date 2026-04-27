@@ -84,6 +84,19 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- [[ Treesitter ]]
+-- nvim-treesitter は 2026-04-03 にアーカイブ済み。Neovim 0.12 組み込み API を直接使用する。
+vim.api.nvim_create_autocmd('FileType', {
+  group = vim.api.nvim_create_augroup('treesitter-attach', { clear = true }),
+  callback = function(args)
+    local lang = vim.treesitter.language.get_lang(args.match)
+    if lang and vim.treesitter.language.add(lang) then
+      vim.treesitter.start(args.buf, lang)
+      vim.bo[args.buf].indentexpr = "v:lua.vim.treesitter.indentexpr()"
+    end
+  end,
+})
+
 require('lazy').setup({
   -- lua/plugins/*.lua を自動インポート
   { import = 'plugins' },
