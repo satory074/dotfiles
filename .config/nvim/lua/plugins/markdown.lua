@@ -15,7 +15,6 @@ return {
   {
     'kevalin/mermaid.nvim',
     ft = { 'mermaid', 'mmd' },
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function()
       require('mermaid').setup()
     end,
