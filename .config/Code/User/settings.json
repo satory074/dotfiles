@@ -1,0 +1,215 @@
+{
+    //==================================================
+    // Editor (エディター) 設定
+    //==================================================
+    "editor.renderWhitespace": "boundary",
+    "editor.fontFamily": "monaspace",
+    "editor.fontSize": 12,
+    "editor.lineNumbers": "on",
+    "editor.cursorStyle": "line",
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.largeFileOptimizations": false,
+    "editor.wordWrap": "off",
+    "editor.wordWrapColumn": 9999,
+    "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+    "editor.bracketPairColorization.enabled": true,
+    "editor.inlineSuggest.enabled": true,
+    "editor.smoothScrolling": true,
+    "editor.mouseWheelScrollSensitivity": 2,
+    "editor.scrollBeyondLastLine": false,
+    "editor.folding": false,
+    "editor.showFoldingControls": "never",
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": true
+    },
+    "editor.parameterHints.enabled": true,
+    "editor.hover.enabled": "on",
+    "editor.tabCompletion": "on",
+    "editor.formatOnType": true,
+    "editor.formatOnPaste": false,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    "editor.minimap.enabled": false,
+    "editor.renderControlCharacters": true,
+    "editor.fontLigatures": true,
+
+    //==================================================
+    // Vim 設定
+    //==================================================
+    "vim.insertModeKeyBindings": [
+        {
+            "before": ["j", "j"],
+            "after": ["<Esc>"]
+        }
+    ],
+    "vim.vimrc.enable": true,
+    "vim.vimrc.path": "$HOME/.vimrc_vs",
+
+    //==================================================
+    // Files (ファイル) 設定
+    //==================================================
+    "files.trimTrailingWhitespace": true,
+    "files.autoGuessEncoding": true,
+    "files.encoding": "utf8",
+    "files.insertFinalNewline": true,
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    "files.associations": {
+        "*.gs": "javascript",
+        "*.frm": "vb"
+    },
+
+    //==================================================
+    // Terminal (ターミナル) 設定
+    //==================================================
+    "terminal.integrated.fontFamily": "monospace",
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.scrollback": 10000,
+    "terminal.integrated.cwd": "${workspaceFolder}",
+    "terminal.integrated.profiles.windows": {
+        "Ubuntu (WSL)": {
+            "path": "C:\\Windows\\System32\\wsl.exe",
+            "args": ["-d", "Ubuntu"]
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "Ubuntu (WSL)",
+    "terminal.integrated.defaultProfile.osx": "zsh",
+
+    //==================================================
+    // Workbench (UI) 設定
+    //==================================================
+    "workbench.iconTheme": "Monokai Pro Icons",
+    "workbench.colorTheme": "Monokai Pro",
+    "workbench.startupEditor": "none",
+    "workbench.preferredLightColorTheme": "Visual Studio Dark",
+    "workbench.preferredDarkColorTheme": "Visual Studio Dark",
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.restoreViewState": false,
+    "breadcrumbs.enabled": true,
+
+    //==================================================
+    // Window / Session
+    //==================================================
+    "window.restoreWindows": "none",
+    "files.hotExit": "off",
+
+    //==================================================
+    // Security / Telemetry 設定
+    //==================================================
+    "security.workspace.trust.untrustedFiles": "open",
+    "security.allowedUNCHosts": ["wsl.localhost"],
+    "redhat.telemetry.enabled": true,
+
+    //==================================================
+    // Git 設定
+    //==================================================
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    "git.decorations.enabled": true,
+    "git.rebaseWhenSync": true,
+    "timeline.showView": "git",
+
+    //==================================================
+    // Python 設定
+    //==================================================
+    "python.pythonPath": "/usr/bin/python3",
+    "python.defaultInterpreterPath": "/usr/bin/python3",
+    "python.showStartPage": false,
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": ["--line-length", "120"],
+    "black-formatter.args": ["--line-length=120"],
+    "python.linting.enabled": true,
+    "python.linting.lintOnSave": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": ["--max-line-length", "120"],
+    "python.linting.pylintEnabled": false,
+    "python.analysis.typeCheckingMode": "basic",
+    "python.terminal.activateEnvInCurrentTerminal": true,
+
+    //==================================================
+    // 言語ごとの設定
+    //==================================================
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true
+    },
+    "[go]": {
+        "editor.defaultFormatter": "golang.go",
+        "editor.formatOnSave": true,
+        "editor.insertSpaces": true
+    },
+    "[javascript]": {
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features",
+        "editor.formatOnSave": true
+    },
+    "[markdown]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "files.trimTrailingWhitespace": false
+    },
+    "[xml]": {
+        "editor.defaultFormatter": "redhat.vscode-xml"
+    },
+
+    //==================================================
+    // Markdown / Notebook 設定
+    //==================================================
+    "markdown.preview.scrollEditorWithPreview": true,
+    "markdown.preview.scrollPreviewWithEditor": true,
+    "markdown.preview.markEditorSelection": true,
+    "markdown.copyFiles.destination": {
+        "**/**/*": "assets/images/"
+    },
+    "notebook.lineNumbers": "on",
+    "notebook.output.textLineLimit": 100,
+
+    //==================================================
+    // Prettier 設定
+    //==================================================
+    "prettier.tabWidth": 4,
+    "prettier.printWidth": 120,
+    "prettier.resolveGlobalModules": true,
+
+    //==================================================
+    // JavaScript / TypeScript 設定
+    //==================================================
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+
+    //==================================================
+    // PlantUML / Copilot
+    //==================================================
+    "plantuml.render": "Local",
+    "github.copilot.nextEditSuggestions.enabled": true,
+
+    //==================================================
+    // Roo Cline (allowed commands)
+    //==================================================
+    "roo-cline.allowedCommands": [
+        "npm test",
+        "npm install",
+        "tsc",
+        "git log",
+        "git diff",
+        "git show",
+        "git commit",
+        "git push",
+        "git add"
+    ],
+
+    //==================================================
+    // Explorer
+    //==================================================
+    "explorer.confirmDragAndDrop": false
+}

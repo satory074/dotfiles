@@ -86,9 +86,18 @@ link "$DOTFILES/.vimrc_vs"     "$HOME/.vimrc_vs"
 link "$DOTFILES/.zsh"          "$HOME/.zsh"
 link "$DOTFILES/.zshrc"        "$HOME/.zshrc"
 
-# Neovim
+# VSCode user settings
 mkdir -p "$HOME/.config"
-link "$DOTFILES/.config/nvim" "$HOME/.config/nvim"
+case "$OS" in
+    macos)     VSCODE_USER="$HOME/Library/Application Support/Code/User" ;;
+    linux|wsl) VSCODE_USER="$HOME/.config/Code/User" ;;
+    *)         VSCODE_USER="" ;;
+esac
+if [[ -n "$VSCODE_USER" ]]; then
+    mkdir -p "$VSCODE_USER"
+    link "$DOTFILES/.config/Code/User/settings.json"    "$VSCODE_USER/settings.json"
+    link "$DOTFILES/.config/Code/User/keybindings.json" "$VSCODE_USER/keybindings.json"
+fi
 
 # .claude
 mkdir -p "$HOME/.claude"

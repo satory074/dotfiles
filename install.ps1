@@ -117,8 +117,11 @@ $links = @(
     @{ Src = "$DOTFILES\.config\powershell\Microsoft.PowerShell_profile.ps1"
        Dst = "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" }
 
-    # Neovim
-    @{ Src = "$DOTFILES\.config\nvim"; Dst = "$env:LOCALAPPDATA\nvim" }
+    # VSCode user settings
+    @{ Src = "$DOTFILES\.config\Code\User\settings.json"
+       Dst = "$HOME\AppData\Roaming\Code\User\settings.json" }
+    @{ Src = "$DOTFILES\.config\Code\User\keybindings.json"
+       Dst = "$HOME\AppData\Roaming\Code\User\keybindings.json" }
 
     # Claude Code
     @{ Src = "$DOTFILES\.claude\CLAUDE.md";   Dst = "$HOME\.claude\CLAUDE.md" }

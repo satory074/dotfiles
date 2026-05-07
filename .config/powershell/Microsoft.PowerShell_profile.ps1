@@ -25,7 +25,8 @@ Remove-Variable _dotenv
 # ============================================================
 # Environment Variables
 # ============================================================
-$env:EDITOR        = 'nvim'
+$env:EDITOR        = 'code --wait'
+$env:VISUAL        = 'code --wait'
 $env:BASECAMP_PATH = "$HOME\basecamp"
 $env:SRC_PATH      = "$env:BASECAMP_PATH\src"
 $env:GEMINI_MODEL  = 'gemini-2.5-pro'
@@ -92,7 +93,7 @@ function cpa {
 # ============================================================
 # Path shortcuts
 # ============================================================
-function vweek  { nvim "$env:SRC_PATH\weekly-memo\current.md" }
+function vweek  { code "$env:SRC_PATH\weekly-memo\current.md" }
 function catc   { cda "$env:SRC_PATH\AtCoder\satory074" }
 function cbas   { cda $env:BASECAMP_PATH }
 function cdot   { cda "$HOME\dotfiles" }
@@ -102,10 +103,7 @@ function csrc   { cda $env:SRC_PATH }
 # Config file shortcuts
 # ============================================================
 function vvr  { vim "$HOME\.vimrc" }
-function nvvr { nvim "$HOME\.vimrc" }
-function nvzr { nvim $PROFILE }
-function nvnv { nvim "$HOME\.config\nvim\init.lua" }
-function vzr  { nvim $PROFILE }
+function vzr  { vim $PROFILE }
 function szr  { . $PROFILE }
 function sva  { . ".\.venv\Scripts\Activate.ps1" }
 function venva { . ".\.venv\Scripts\Activate.ps1" }

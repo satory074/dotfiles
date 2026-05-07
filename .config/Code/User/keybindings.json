@@ -1,0 +1,25 @@
+// 既定値を上書きするキーバインド
+// 注: 現状は macOS の cmd 系のみ。Windows/Linux 用が必要な場合は
+// 各 binding に "mac" / "win" / "linux" フィールドで分岐を追加すること。
+[
+    {
+        "key": "cmd+s cmd+n",
+        "command": "editor.action.insertSnippet"
+    },
+    {
+        "key": "ctrl+cmd+[",
+        "command": "workbench.action.moveEditorLeftInGroup"
+    },
+    {
+        "key": "ctrl+cmd+]",
+        "command": "workbench.action.moveEditorRightInGroup"
+    },
+    {
+        "key": "shift+enter",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "\\\r\n"
+        },
+        "when": "terminalFocus"
+    }
+]

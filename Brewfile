@@ -2,9 +2,6 @@
 brew "gh"
 brew "starship"   # Cross-shell prompt (replaces oh-my-zsh theme)
 
-# Editor
-brew "neovim"
-
 # Modern CLI replacements
 brew "bat"        # cat with syntax highlighting
 brew "eza"        # ls replacement
