@@ -1,5 +1,6 @@
--- lua/plugins/markdown.lua: Markdown レンダリング・Mermaid プレビュー
+-- lua/plugins/markdown.lua: Markdown 装飾 + ブラウザプレビュー（mermaid 対応）
 return {
+  -- バッファ内 Markdown 装飾（見出し・コードブロック枠・チェックボックス等）
   {
     'MeanderingProgrammer/render-markdown.nvim',
     ft = { 'markdown' },
@@ -11,12 +12,21 @@ return {
     },
   },
 
-  -- Mermaid ダイアグラムのライブプレビュー（Lua 内蔵 HTTP サーバ、外部依存なし）
+  -- ブラウザでのライブプレビュー（```mermaid を SVG レンダリング）
   {
-    'kevalin/mermaid.nvim',
-    ft = { 'mermaid', 'mmd' },
-    config = function()
-      require('mermaid').setup()
+    'iamcco/markdown-preview.nvim',
+    -- Apple Silicon 向けのプリビルトバイナリが無いため、ソースからビルドする
+    build = 'cd app && npx --yes yarn install',
+    ft = { 'markdown' },
+    init = function()
+      vim.g.mkdp_filetypes = { 'markdown' }
+      vim.g.mkdp_auto_close = 1
+      vim.g.mkdp_theme = 'dark'
     end,
+    keys = {
+      { '<leader>mp', '<cmd>MarkdownPreview<CR>',       ft = 'markdown', desc = 'Markdown preview start' },
+      { '<leader>ms', '<cmd>MarkdownPreviewStop<CR>',   ft = 'markdown', desc = 'Markdown preview stop' },
+      { '<leader>mt', '<cmd>MarkdownPreviewToggle<CR>', ft = 'markdown', desc = 'Markdown preview toggle' },
+    },
   },
 }
