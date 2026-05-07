@@ -30,13 +30,13 @@ cd ~/dotfiles && bash ./install.sh
 | `.zshrc` | zsh メイン設定。Starship プロンプト・エイリアス・関数など |
 | `.gitconfig` | Git のグローバル設定（delta / rerere / histogram diff） |
 | `.vimrc` | Vim 設定 |
-| `.vimrc_vs` | VSCode 向け Vim 設定 |
-| `.config/nvim/init.lua` | Neovim エントリポイント（オプション・キーマップのみ） |
-| `.config/nvim/lua/plugins/` | プラグイン設定（editor / ui / telescope / lsp / completion / formatting / treesitter） |
+| `.vimrc_vs` | VSCodeVim から `vim.vimrc.path` で読み込まれる Vim 設定 |
+| `.config/Code/User/settings.json` | VSCode ユーザー設定（OS ごとの宛先に symlink） |
+| `.config/Code/User/keybindings.json` | VSCode キーバインド |
 | `.claude/settings.json` | Claude Code の設定（hooks, モデル, 権限）|
 | `.claude/CLAUDE.md` | Claude Code へのグローバル指示 |
 | `.claude/commands/` | Claude Code カスタムコマンド |
-| `.claude/statusline-command.sh` | Claude Code ステータスライン スクリプト |
+| `.claude/statusline.py` (macOS/Linux) / `.claude/statusline-command.ps1` (Windows) | Claude Code ステータスライン |
 | `Brewfile` | Homebrew パッケージ一覧（macOS / WSL） |
 | `Aptfile` | apt パッケージ一覧（Linux） |
 | `.git-hooks/pre-commit` | シークレット誤コミット防止フック |
