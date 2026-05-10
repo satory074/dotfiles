@@ -139,7 +139,25 @@ foreach ($link in $links) {
 }
 
 # ============================================================
-# 4. settings.json (copy from sample if not present)
+# 4. Per-machine git identity (~/.gitconfig.local)
+# ============================================================
+Write-Step "Setting up ~/.gitconfig.local"
+$gitconfigLocal = "$HOME\.gitconfig.local"
+if (-not (Test-Path $gitconfigLocal)) {
+    @(
+        '; Per-machine git identity. Edit name/email below.'
+        '; This file is git-ignored and unique to this machine.'
+        '[user]'
+        "`tname ="
+        "`temail ="
+    ) | Set-Content -Path $gitconfigLocal -Encoding UTF8
+    Write-OK "~/.gitconfig.local created — fill in [user] section before committing"
+} else {
+    Write-Skip "~/.gitconfig.local already exists"
+}
+
+# ============================================================
+# 5. settings.json (copy from sample if not present)
 # ============================================================
 Write-Step "Setting up .claude/settings.json"
 $settingsDst = "$HOME\.claude\settings.json"
@@ -156,7 +174,7 @@ if (-not (Test-Path $settingsDst)) {
 }
 
 # ============================================================
-# 5. Git hooks path
+# 6. Git hooks path
 # ============================================================
 Write-Step "Configuring git hooks"
 Push-Location $DOTFILES

@@ -1,6 +1,6 @@
-[user]
-	name = satory074
-	email = satory074@gmail.com
+; Per-machine identity lives in ~/.gitconfig.local (git-ignored, created by install.sh / install.ps1).
+[include]
+	path = ~/.gitconfig.local
 
 [core]
     editor = vim -c "set fenc=utf-8"

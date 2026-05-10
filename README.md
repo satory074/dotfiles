@@ -43,6 +43,21 @@ cd ~/dotfiles && bash ./install.sh
 | `test/bootstrap-check.sh` | bootstrap 検証スクリプト |
 | `Dockerfile.test` | コンテナでの bootstrap テスト |
 
+## Git identity（マシンごと）
+
+`.gitconfig` に `[user]` は **書かない**。`[include] path = ~/.gitconfig.local` だけを持ち、実際の `name` / `email` はマシンごとに `~/.gitconfig.local`（git 管理外）で設定する：
+
+```ini
+; ~/.gitconfig.local
+[user]
+    name = your-name
+    email = your@email.com
+```
+
+`install.sh` / `install.ps1` が初回実行時に空の `~/.gitconfig.local` を生成するので、そこに identity を書き込んでから commit する。未記入だと `git commit` が "Please tell me who you are" で失敗するので、誤った identity でコミットしてしまう事故を防げる。
+
+個人 Mac には `satory074`、仕事 PC には work アカウントの identity を、それぞれの `~/.gitconfig.local` に書く。
+
 ## Claude Code 設定のセットアップ
 
 `.claude/settings.json` は `.gitignore` で除外されているためサンプルからコピーして使う：

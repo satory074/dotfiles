@@ -81,6 +81,22 @@ link() {
 }
 
 link "$DOTFILES/.gitconfig"   "$HOME/.gitconfig"
+
+# Per-machine git identity, loaded via [include] from .gitconfig.
+# Created as a placeholder on first run; user fills in name/email for this machine.
+if [[ ! -f "$HOME/.gitconfig.local" ]]; then
+    log "creating ~/.gitconfig.local placeholder — fill in [user] section before committing"
+    cat > "$HOME/.gitconfig.local" <<'EOF'
+; Per-machine git identity. Edit name/email below.
+; This file is git-ignored and unique to this machine.
+[user]
+	name =
+	email =
+EOF
+else
+    skip "~/.gitconfig.local already exists"
+fi
+
 link "$DOTFILES/.vimrc"        "$HOME/.vimrc"
 link "$DOTFILES/.vimrc_vs"     "$HOME/.vimrc_vs"
 link "$DOTFILES/.zsh"          "$HOME/.zsh"
