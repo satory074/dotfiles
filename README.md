@@ -43,24 +43,6 @@ cd ~/dotfiles && bash ./install.sh
 | `test/bootstrap-check.sh` | bootstrap 検証スクリプト |
 | `Dockerfile.test` | コンテナでの bootstrap テスト |
 
-## `.env` の設定方法（デュアル Git アカウント）
-
-`~/dotfiles/.env` を作成し、以下の変数を定義する（git 管理外）：
-
-```shell
-MAIN_GIT_USER=your-main-github-username
-MAIN_GIT_EMAIL=your-main@email.com
-SUB_GIT_USER=your-sub-github-username
-SUB_GIT_EMAIL=your-sub@email.com
-```
-
-`.zshrc` 内の `gmain` / `gsub` 関数でアカウントを切り替えられる：
-
-```shell
-gmain   # メインアカウントに切り替え
-gsub    # サブアカウントに切り替え
-```
-
 ## Claude Code 設定のセットアップ
 
 `.claude/settings.json` は `.gitignore` で除外されているためサンプルからコピーして使う：

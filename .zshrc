@@ -95,20 +95,6 @@ alias gswm='git switch main'
 alias gsws='git switch staging'
 alias gtag='git tag'
 
-function gmain() {
-    git config --global user.name "$MAIN_GIT_USER"
-    git config --global user.email "$MAIN_GIT_EMAIL"
-    git config user.name
-    gh auth switch --hostname github.com --user "$MAIN_GIT_USER"
-}
-
-function gsub() {
-    git config --global user.name "$SUB_GIT_USER"
-    git config --global user.email "$SUB_GIT_EMAIL"
-    git config user.name
-    gh auth switch --hostname github.com --user "$SUB_GIT_USER"
-}
-
 alias gst='git stash'
 alias gstp='git stash pop'
 alias gstl='git stash list'

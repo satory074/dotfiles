@@ -8,7 +8,7 @@
 $OutputEncoding = [System.Text.Encoding]::UTF8
 
 # ============================================================
-# .env (git credentials: MAIN_GIT_USER, MAIN_GIT_EMAIL, etc.)
+# .env (machine-specific environment variables, optional)
 # ============================================================
 $_dotenv = Join-Path $HOME 'dotfiles\.env'
 if (Test-Path $_dotenv) {
@@ -159,19 +159,6 @@ function gwtl  { git worktree list }
 function gwtr  { git worktree remove $args }
 function gfb   { fzf-git-branch }
 function gfa   { fzf-git-add }
-
-function gmain {
-    git config --global user.name  $env:MAIN_GIT_USER
-    git config --global user.email $env:MAIN_GIT_EMAIL
-    git config user.name
-    gh auth switch --hostname github.com --user $env:MAIN_GIT_USER
-}
-function gsub {
-    git config --global user.name  $env:SUB_GIT_USER
-    git config --global user.email $env:SUB_GIT_EMAIL
-    git config user.name
-    gh auth switch --hostname github.com --user $env:SUB_GIT_USER
-}
 
 function fzf-git-branch {
     $branch = git branch --all | Where-Object { $_ -notmatch 'HEAD' } | fzf
